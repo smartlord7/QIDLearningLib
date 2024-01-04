@@ -6,7 +6,7 @@ QIDLearningLib is a Python library designed to provide a comprehensive set of me
 The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
 
 Module Description (metrics.data_utility):
-The module in QIDLearningLib includes functions to calculate various metrics related to the data utility regarding the quasi identifiers.
+This module in QIDLearningLib includes functions to calculate various metrics related to the data utility regarding the quasi identifiers.
 These metrics measure aspects such as the predictive power of each quasi identifier group
 
 
@@ -16,7 +16,7 @@ Department: Department of Informatics Engineering
 Program: Master's in Informatics Engineering - Intelligent Systems
 Author: Sancho Amaral Simões
 Student No: 2019217590
-Email: sanchoamaralsimoes@gmail.com
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
 Version: v0.01
 
 License:
@@ -28,7 +28,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error, accuracy_score
-from structure.GroupedMetric import GroupedMetric
+from structure.grouped_metric import GroupedMetric
 
 
 def mean_squared_err(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pd.Series) -> GroupedMetric:

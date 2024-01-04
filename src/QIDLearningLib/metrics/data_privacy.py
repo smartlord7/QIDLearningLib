@@ -6,7 +6,7 @@ QIDLearningLib is a Python library designed to provide a comprehensive set of me
 The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
 
 Module Description (metrics.data_privacy):
-The module in QIDLearningLib includes functions to calculate various metrics related to the data privacy regarding the assumed quasi identifiers and/or sensitive attributes.
+This module in QIDLearningLib includes functions to calculate various metrics related to the data privacy regarding the assumed quasi identifiers and/or sensitive attributes.
 
 Year: 2023/2024
 Institution: University of Coimbra
@@ -14,7 +14,7 @@ Department: Department of Informatics Engineering
 Program: Master's in Informatics Engineering - Intelligent Systems
 Author: Sancho Amaral Simões
 Student No: 2019217590
-Email: sanchoamaralsimoes@gmail.com
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
 Version: v0.01
 
 License:
@@ -27,7 +27,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import wasserstein_distance
 from scipy.stats import entropy as scipy_entropy
-from structure.GroupedMetric import GroupedMetric
+from structure.grouped_metric import GroupedMetric
 
 
 def k_anonymity(df, quasi_identifiers):

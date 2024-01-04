@@ -18,7 +18,7 @@ Department: Department of Informatics Engineering
 Program: Master's in Informatics Engineering - Intelligent Systems
 Author: Sancho Amaral Simões
 Student No: 2019217590
-Email: sanchoamaralsimoes@gmail.com
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
 Version: v0.01
 
 License:

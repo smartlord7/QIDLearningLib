@@ -6,7 +6,7 @@ QIDLearningLib is a Python library designed to provide a comprehensive set of me
 The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
 
 Module Description (metrics.causality):
-The module in QIDLearningLib includes functions to calculate various causality metrics in order to study the causal effect
+This module in QIDLearningLib includes functions to calculate various causality metrics in order to study the causal effect
 between the assumed quasi identifiers and the remaining attributes.
 These metrics measure aspects such as data separation, distinction.
 
@@ -16,7 +16,7 @@ Department: Department of Informatics Engineering
 Program: Master's in Informatics Engineering - Intelligent Systems
 Author: Sancho Amaral Simões
 Student No: 2019217590
-Email: sanchoamaralsimoes@gmail.com
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
 Version: v0.01
 
 License:
@@ -31,7 +31,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from structure.GroupedMetric import GroupedMetric
+from structure.grouped_metric import GroupedMetric
 from util.data import encode_categorical
 from util.stats import t_test, ks_test
 

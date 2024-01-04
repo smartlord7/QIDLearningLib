@@ -7,6 +7,7 @@ The library encompasses metrics for assessing data privacy, data utility, and th
 
 Module Description (util.stats):
 This module in QIDLearningLib allows provides some auxiliar functions for the statistical tests necessary, specifically in the causality metrics module.
+
 Year: 2023/2024
 Institution: University of Coimbra
 Department: Department of Informatics Engineering

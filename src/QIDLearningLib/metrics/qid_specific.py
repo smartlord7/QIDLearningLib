@@ -56,26 +56,24 @@ def separation(df: pd.DataFrame, attributes: list) -> float:
 
     See Also:
     - distinction: Calculates the Distinction metric.
-
     """
 
-    # Extract the subset of the DataFrame with specified attributes
-    subset_df = df[attributes]
+    # Convert DataFrame to NumPy array with a specific dtype
+    array_values = df[attributes].to_numpy(dtype=str)
 
     # Count the occurrences of each unique attribute combination
-    _, counts = np.unique(subset_df, axis=0, return_counts=True)
+    _, counts = np.unique(array_values, axis=0, return_counts=True)
 
     # Calculate the total to subtract for separation metric
     to_subtract = np.sum((counts - 1) * counts // 2)
 
     # Calculate the total possible combinations
-    total = subset_df.shape[0] * (subset_df.shape[0] - 1) / 2
+    total = array_values.shape[0] * (array_values.shape[0] - 1) / 2
 
     # Calculate and return the separation metric
     separation_value = (total - to_subtract) * 100 / total
 
     return separation_value
-
 
 def distinction(df: pd.DataFrame, attributes: list) -> float:
     """
@@ -104,13 +102,13 @@ def distinction(df: pd.DataFrame, attributes: list) -> float:
     - separation: Calculates the Separation metric.
     """
 
-    # Extract the subset of the DataFrame with specified attributes
-    subset_df = df[attributes]
+    # Convert DataFrame to NumPy array with a specific dtype
+    array_values = df[attributes].to_numpy(dtype=str)
 
     # Count the number of unique attribute combinations
-    unique = np.unique(subset_df, axis=0) if len(subset_df.shape) == 2 else np.unique(subset_df)
+    unique = np.unique(array_values, axis=0) if len(array_values.shape) == 2 else np.unique(array_values)
 
     # Calculate and return the distinction metric
-    dist = (len(unique) / subset_df.shape[0]) * 100
+    dist = (len(unique) / array_values.shape[0]) * 100
 
     return dist

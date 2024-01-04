@@ -11,7 +11,6 @@ The metrics include specificity, false positive rate (fpr), precision, recall, F
 overlap coefficient, and accuracy. In this case, since the real and predicted quasi-identifiers are sets (the order is not relevant), the mentioned
 metrics are therefore adapted for sets and make use of sets operations, such as intersection and union.
 
-
 Year: 2023/2024
 Institution: University of Coimbra
 Department: Department of Informatics Engineering

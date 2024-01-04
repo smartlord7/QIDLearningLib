@@ -9,7 +9,6 @@ Module Description (metrics.data_utility):
 This module in QIDLearningLib includes functions to calculate various metrics related to the data utility regarding the quasi identifiers.
 These metrics measure aspects such as the predictive power of each quasi identifier group
 
-
 Year: 2023/2024
 Institution: University of Coimbra
 Department: Department of Informatics Engineering

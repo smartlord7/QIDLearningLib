@@ -1,16 +1,69 @@
+"""
+QIDLearningLib
+
+Library Description (QIDLearningLib):
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+
+Module Description (metrics.causality):
+The module in QIDLearningLib includes functions to calculate various causality metrics in order to study the causal effect
+between the assumed quasi identifiers and the remaining attributes.
+These metrics measure aspects such as data separation, distinction.
+
+Year: 2023/2024
+Institution: University of Coimbra
+Department: Department of Informatics Engineering
+Program: Master's in Informatics Engineering - Intelligent Systems
+Author: Sancho Amaral Simões
+Student No: 2019217590
+Email: sanchoamaralsimoes@gmail.com
+Version: v0.01
+
+License:
+This open-source software is released under the terms of the GNU General Public License, version 3 (GPL-3.0).
+For more details, see https://www.gnu.org/licenses/gpl-3.0.html
+
+"""
+
 import numpy as np
-from scipy.stats import stats
+import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-
 from structure.GroupedMetric import GroupedMetric
 from util.data import encode_categorical
+from util.stats import t_test, ks_test
 
 
 def covariate_shift(df, quasi_identifiers, treatment_col, treatment_value):
+    """
+    Calculate covariate shift metric for a given DataFrame and attributes.
+
+    Synopse:
+    Covariate shift metric measures the difference in distribution between treated and control groups based on specified attributes.
+
+    Details:
+    The metric is computed by comparing the distribution of attribute values between treated and control groups using the Kolmogorov-Smirnov statistic. Additionally, it considers the overall distribution difference across the entire DataFrame.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing the quasi-identifiers.
+    - treatment_col (str): The column name representing the treatment indicator.
+    - treatment_value: The value indicating the treated group.
+
+    Return:
+    GroupedMetric: An object containing covariate shift metric values and corresponding group labels.
+
+    Example:
+    >>> df = pd.DataFrame({'A': [1, 2, 1, 2], 'B': ['X', 'Y', 'X', 'Y'], 'Treatment': [1, 0, 1, 0]})
+    >>> metric_result = covariate_shift(df, ['A', 'B'], 'Treatment', 1)
+    >>> print(metric_result.values)
+    [0.1, 0.2, ...]  # Covariate shift metric values
+    >>> print(metric_result.group_labels)
+    ['Group 1', 'Group 2', ...]  # Corresponding group labels
+
+    """
     treated = df[df[treatment_col] == treatment_value]
     control = df[df[treatment_col] != treatment_value]
 
@@ -54,6 +107,33 @@ def covariate_shift(df, quasi_identifiers, treatment_col, treatment_value):
 
 
 def balance_test(df, quasi_identifiers, treatment_col, treatment_value):
+    """
+    Perform balance test for a given DataFrame and attributes.
+
+    Synopse:
+    Balance test measures the balance between treated and control groups based on specified quasi-identifiers.
+
+    Details:
+    The metric is computed by applying a t-test to each group defined by the quasi-identifiers, comparing the distribution of values between treated and control groups.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing the quasi-identifiers.
+    - treatment_col (str): The column name representing the treatment indicator.
+    - treatment_value: The value indicating the treated group.
+
+    Return:
+    GroupedMetric: An object containing balance test metric values and corresponding group labels.
+
+    Example:
+    >>> df = pd.DataFrame({'A': [1, 2, 1, 2], 'B': ['X', 'Y', 'X', 'Y'], 'Treatment': [1, 0, 1, 0]})
+    >>> metric_result = balance_test(df, ['A', 'B'], 'Treatment', 1)
+    >>> print(metric_result.values)
+    [0.1, 0.2, ...]  # Balance test metric values
+    >>> print(metric_result.group_labels)
+    ['Group 1', 'Group 2', ...]  # Corresponding group labels
+
+    """
     treated = df[df[treatment_col] == treatment_value]
     control = df[df[treatment_col] != treatment_value]
 
@@ -87,10 +167,38 @@ def balance_test(df, quasi_identifiers, treatment_col, treatment_value):
                 group_labels.append(group_name)
 
     values = np.array(balance_metrics)
+
     return GroupedMetric(values, group_labels, name='Balance Test')
 
 
 def propensity_score_overlap(df, quasi_identifiers, treatment_col, treatment_value):
+    """
+    Calculate propensity score overlap metric for a given DataFrame and attributes.
+
+    Synopse:
+    Propensity score overlap metric measures the degree of overlap in propensity scores between treated and control groups based on specified quasi-identifiers.
+
+    Details:
+    The metric is computed by fitting a logistic regression model to predict the treatment indicator based on quasi-identifiers. Propensity scores are then extracted, and the mean overlap is calculated.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing the quasi-identifiers.
+    - treatment_col (str): The column name representing the treatment indicator.
+    - treatment_value: The value indicating the treated group.
+
+    Return:
+    GroupedMetric: An object containing propensity score overlap metric values and corresponding group labels.
+
+    Example:
+    >>> df = pd.DataFrame({'A': [1, 2, 1, 2], 'B': ['X', 'Y', 'X', 'Y'], 'Treatment': [1, 0, 1, 0]})
+    >>> metric_result = propensity_score_overlap(df, ['A', 'B'], 'Treatment', 1)
+    >>> print(metric_result.values)
+    [0.1, 0.2, ...]  # Propensity score overlap metric values
+    >>> print(metric_result.group_labels)
+    ['Treatment 1', 'Treatment 2', ...]  # Corresponding group labels
+
+    """
     X = df[quasi_identifiers]
     y = df[treatment_col]
 
@@ -134,19 +242,5 @@ def propensity_score_overlap(df, quasi_identifiers, treatment_col, treatment_val
     group_labels = [f'Treatment {i+1}' for i in range(len(overlap_metrics))]
 
     values = np.array(overlap_metrics)
+
     return GroupedMetric(values, group_labels=group_labels, name='Propensity Score Overlap')
-
-
-
-
-# Utility functions for statistical tests
-def ks_test(sample1, sample2):
-    # Kolmogorov-Smirnov test
-    ks_statistic, _ = stats.ks_2samp(sample1, sample2)
-    return ks_statistic, _
-
-
-def t_test(sample1, sample2):
-    # Independent t-test
-    t_statistic, _ = stats.ttest_ind(sample1, sample2)
-    return t_statistic, _

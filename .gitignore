@@ -160,3 +160,9 @@ cython_debug/
 #.idea/
 
 src/QIDLearningLib/.idea/
+
+src/QIDLearningLib/source/
+
+src/QIDLearningLib/make.bat
+
+src/QIDLearningLib/Makefile

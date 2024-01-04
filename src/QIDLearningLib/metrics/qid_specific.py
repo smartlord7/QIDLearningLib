@@ -1,9 +1,13 @@
 """
 QIDLearningLib
 
-Description:
-A Python library designed to offer a comprehensive set of metrics for quasi-identification recognition processes.
-The library includes metrics that assess data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+Library Description (QIDLearningLib):
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+
+Module Description (metrics.qid_specific):
+The module in QIDLearningLib includes functions to calculate various metrics related to quasi-identification recognition.
+These metrics measure aspects such as data separation, distinction.
 
 Year: 2023/2024
 Institution: University of Coimbra
@@ -19,6 +23,8 @@ This open-source software is released under the terms of the GNU General Public 
 For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
+
+
 
 import numpy as np
 import pandas as pd  # Make sure to import pandas if not already done

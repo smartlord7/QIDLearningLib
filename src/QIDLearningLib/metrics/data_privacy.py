@@ -275,24 +275,81 @@ def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes 
 
 
 def generalization_ratio(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -> GroupedMetric:
+    """
+    Calculate the Generalization Ratio metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Generalization Ratio measures the overall difference in the distribution of sensitive attributes between the entire
+    dataset and its grouped subsets based on quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the sum of absolute
+    differences in the distribution of sensitive attributes between the overall dataset and each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (list): List of column names representing sensitive attributes.
+
+    Return:
+    GroupedMetric: Generalization Ratio metric for each group.
+    """
+
+    # Calculate the overall distribution of sensitive attributes
     overall_distribution = df[sensitive_attributes].value_counts(normalize=True)
+
+    # Group the DataFrame based on quasi-identifiers
     grouped = df.groupby(quasi_identifiers)
 
+    # Initialize an empty list to store Generalization Ratio values for each group
     generalization_ratio_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
     for group_name, group_df in grouped:
+        # Calculate the distribution of sensitive attributes within the current group
         group_distribution = group_df[sensitive_attributes].value_counts(normalize=True)
+
+        # Calculate the absolute differences and sum them up
         generalization_ratio_values.append(np.sum(np.abs(overall_distribution - group_distribution)))
 
-    group_labels = [group_name for group_name, _ in grouped]
+        group_labels.append(group_name)
 
+    # Create a GroupedMetric object with the calculated Generalization Ratio values, group labels, and a name
     return GroupedMetric(np.array(generalization_ratio_values), group_labels, name='Generalization Ratio')
 
 
 def reciprocal_rank(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -> GroupedMetric:
+    """
+    Calculate the Reciprocal Rank metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Reciprocal Rank measures the quality of rankings based on the inverse of the rank position of the correct sensitive
+    attribute value within each group.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers, ranking the sensitive attribute values
+    in descending order within each group, and then calculating the reciprocal of the rank of the correct value.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (list): List of column names representing sensitive attributes.
+
+    Return:
+    GroupedMetric: Reciprocal Rank metric for each group.
+    """
+
+    # Rank the sensitive attributes in descending order within each group
     ranks = df.groupby(quasi_identifiers)[sensitive_attributes].rank(ascending=False)
+
+    # Calculate the reciprocal ranks
     reciprocal_ranks = 1 / ranks
     mrr_values = reciprocal_ranks.values
 
     group_labels = [group_name for group_name, _ in df.groupby(quasi_identifiers)]
 
+    # Create a GroupedMetric object with the calculated Reciprocal Rank values, group labels, and a name
     return GroupedMetric(mrr_values, group_labels, name='Reciprocal Rank')
+

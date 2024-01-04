@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 
 
 def generate_synthetic_dataset(num_records=10000):
@@ -64,3 +65,11 @@ def calculate_core(dataframe):
             core_attributes.discard(attribute)
 
     return core_attributes
+
+
+def encode_categorical(df, columns):
+    """Encode categorical columns to numeric representation."""
+    label_encoder = LabelEncoder()
+    for column in columns:
+        df[column] = label_encoder.fit_transform(df[column])
+    return df

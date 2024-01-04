@@ -1,0 +1,1049 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>QIDLearningLib.metrics.performance API documentation</title>
+<meta name="description" content="QIDLearningLib …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>QIDLearningLib.metrics.performance</code></h1>
+</header>
+<section id="section-intro">
+<p>QIDLearningLib</p>
+<p>Library Description (QIDLearningLib):
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.</p>
+<p>Module Description (metrics.performance):
+This module provides a set of performance metrics commonly used in the evaluation of classification and prediction models.
+The metrics include specificity, false positive rate (fpr), precision, recall, F1 score, Jaccard similarity, Dice similarity,
+overlap coefficient, and accuracy. In this case, since the real and predicted quasi-identifiers are sets (the order is not relevant), the mentioned
+metrics are therefore adapted for sets and make use of sets operations, such as intersection and union.</p>
+<p>Year: 2023/2024
+Institution: University of Coimbra
+Department: Department of Informatics Engineering
+Program: Master's in Informatics Engineering - Intelligent Systems
+Author: Sancho Amaral Simões
+Student No: 2019217590
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
+Version: v0.01</p>
+<p>License:
+This open-source software is released under the terms of the GNU General Public License, version 3 (GPL-3.0).
+For more details, see <a href="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+QIDLearningLib
+
+Library Description (QIDLearningLib):
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+
+Module Description (metrics.performance):
+This module provides a set of performance metrics commonly used in the evaluation of classification and prediction models.
+The metrics include specificity, false positive rate (fpr), precision, recall, F1 score, Jaccard similarity, Dice similarity,
+overlap coefficient, and accuracy. In this case, since the real and predicted quasi-identifiers are sets (the order is not relevant), the mentioned
+metrics are therefore adapted for sets and make use of sets operations, such as intersection and union.
+
+Year: 2023/2024
+Institution: University of Coimbra
+Department: Department of Informatics Engineering
+Program: Master&#39;s in Informatics Engineering - Intelligent Systems
+Author: Sancho Amaral Simões
+Student No: 2019217590
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
+Version: v0.01
+
+License:
+This open-source software is released under the terms of the GNU General Public License, version 3 (GPL-3.0).
+For more details, see https://www.gnu.org/licenses/gpl-3.0.html
+
+&#34;&#34;&#34;
+
+
+def specificity(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Specificity metric for binary classification.
+
+    Synopse:
+    Specificity measures the proportion of true negatives among all actual negatives.
+
+    Details:
+    It is computed by counting the true negatives (instances correctly predicted as negatives) and
+    false positives (instances incorrectly predicted as positives) and then calculating the ratio of true negatives
+    to the sum of true negatives and false positives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Specificity metric value.
+
+    Example:
+    &gt;&gt;&gt; spec_value = specificity(predicted_set, actual_set)
+    &gt;&gt;&gt; print(spec_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true negatives by finding instances that are in the actual set but not in the predicted set
+    true_negatives = len(actual - predicted)
+
+    # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
+    false_positives = len(predicted - actual)
+
+    # Check if the sum of true negatives and false positives is zero to avoid division by zero
+    if true_negatives + false_positives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the specificity metric by dividing true negatives by the sum of true negatives and false positives
+        return true_negatives / (true_negatives + false_positives)
+
+
+def fpr(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the False Positive Rate (FPR) metric for binary classification.
+
+    Synopse:
+    FPR measures the proportion of false positives among all actual negatives.
+
+    Details:
+    It is computed by counting the true negatives and false positives and then calculating the ratio of false positives
+    to the sum of true negatives and false positives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: FPR metric value.
+
+    Example:
+    &gt;&gt;&gt; fpr_value = fpr(predicted_set, actual_set)
+    &gt;&gt;&gt; print(fpr_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true negatives by finding instances that are in the actual set but not in the predicted set
+    true_negatives = len(actual - predicted)
+
+    # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
+    false_positives = len(predicted - actual)
+
+    # Check if the sum of true negatives and false positives is zero to avoid division by zero
+    if true_negatives + false_positives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the false positive rate metric by dividing false positives by the sum of true negatives and false positives
+        return false_positives / (true_negatives + false_positives)
+
+
+def precision(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Precision metric for binary classification.
+
+    Synopse:
+    Precision measures the proportion of true positives among all predicted positives.
+
+    Details:
+    It is computed by counting the true positives (instances correctly predicted as positives) and false positives
+    and then calculating the ratio of true positives to the sum of true positives and false positives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Precision metric value.
+
+    Example:
+    &gt;&gt;&gt; precision_value = precision(predicted_set, actual_set)
+    &gt;&gt;&gt; print(precision_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true positives by finding instances that are both in the predicted and actual sets
+    true_positives = len(predicted &amp; actual)
+
+    # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
+    false_positives = len(predicted - actual)
+
+    # Check if the sum of true positives and false positives is zero to avoid division by zero
+    if true_positives + false_positives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the precision metric by dividing true positives by the sum of true positives and false positives
+        return true_positives / (true_positives + false_positives)
+
+
+def recall(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Recall (Sensitivity) metric for binary classification.
+
+    Synopse:
+    Recall measures the proportion of true positives among all actual positives.
+
+    Details:
+    It is computed by counting the true positives and false negatives (instances incorrectly predicted as negatives)
+    and then calculating the ratio of true positives to the sum of true positives and false negatives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Recall metric value.
+
+    Example:
+    &gt;&gt;&gt; recall_value = recall(predicted_set, actual_set)
+    &gt;&gt;&gt; print(recall_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true positives by finding instances that are both in the predicted and actual sets
+    true_positives = len(predicted &amp; actual)
+
+    # Calculate the false negatives by finding instances that are in the actual set but not in the predicted set
+    false_negatives = len(actual - predicted)
+
+    # Check if the sum of true positives and false negatives is zero to avoid division by zero
+    if true_positives + false_negatives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the recall metric by dividing true positives by the sum of true positives and false negatives
+        return true_positives / (true_positives + false_negatives)
+
+
+def f1_score(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the F1 Score metric for binary classification.
+
+    Synopse:
+    F1 Score is the harmonic mean of Precision and Recall.
+
+    Details:
+    It is computed by calculating Precision and Recall using the provided sets of predicted and actual instances
+    and then applying the formula: 2 * (precision * recall) / (precision + recall).
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: F1 Score metric value.
+
+    Example:
+    &gt;&gt;&gt; f1_score_value = f1_score(predicted_set, actual_set)
+    &gt;&gt;&gt; print(f1_score_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate precision and recall using the specified functions
+    prec = precision(predicted, actual)
+    rec = recall(predicted, actual)
+
+    # Check if the sum of precision and recall is zero to avoid division by zero
+    if prec + rec == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the F1 score by applying the formula: 2 * (precision * recall) / (precision + recall)
+        return 2 * (prec * rec) / (prec + rec)
+
+
+def f2_score(predicted: set, actual: set, beta: float = 2.0) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the F2 Score metric for binary classification.
+
+    Synopse:
+    F2 Score is the harmonic mean of Precision and Recall with emphasis on recall.
+
+    Details:
+    It is computed by calculating Precision and Recall using the provided sets of predicted and actual instances
+    and then applying the formula: (1 + beta^2) * (precision * recall) / (beta^2 * precision + recall).
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+    - beta (float, optional): Controls the trade-off between precision and recall. Defaults to 2.0.
+
+    Return:
+    float: F2 Score metric value.
+
+    Example:
+    &gt;&gt;&gt; f2_score_value = f2_score(predicted_set, actual_set, beta=2.0)
+    &gt;&gt;&gt; print(f2_score_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate true positives, false positives, and false negatives
+    true_positives = len(predicted.intersection(actual))
+    false_positives = len(predicted - actual)
+    false_negatives = len(actual - predicted)
+
+    # Calculate precision and recall, handling the case where the denominator is zero
+    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) != 0 else 0
+    recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) != 0 else 0
+
+    # Check if precision + recall is zero to avoid division by zero
+    if precision + recall == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Calculate the F-beta score using the specified beta value
+        numerator = (1 + beta ** 2) * precision * recall
+        denominator = (beta ** 2 * precision) + recall
+        return numerator / denominator
+
+
+def jaccard_similarity(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Jaccard Similarity metric for binary classification.
+
+    Synopse:
+    Jaccard Similarity measures the intersection over union of predicted and actual sets.
+
+    Details:
+    It is computed by calculating the size of the intersection and the size of the union of predicted and actual sets,
+    and then applying the formula: intersection_size / union_size.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Jaccard Similarity metric value.
+
+    Example:
+    &gt;&gt;&gt; jaccard_value = jaccard_similarity(predicted_set, actual_set)
+    &gt;&gt;&gt; print(jaccard_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the size of the intersection and union of the sets
+    intersection_size = len(predicted &amp; actual)
+    union_size = len(predicted | actual)
+
+    # Check if the union size is zero to avoid division by zero
+    if union_size == 0:
+        # Return 0.0 if the union size is zero to handle the edge case
+        return 0.0
+    else:
+        # Calculate the Jaccard similarity
+        return intersection_size / union_size
+
+
+def dice_similarity(predicted: set, actual: set, alpha: float = 1.0, beta: float = 1.0) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Dice Similarity Coefficient for binary classification.
+
+    Synopse:
+    Dice Similarity Coefficient measures the similarity between predicted and actual sets.
+
+    Details:
+    It is computed by calculating the size of the intersection and the total size of predicted and actual sets,
+    and then applying the formula: (alpha * intersection_size^beta) / ((alpha * size_of_predicted_set^beta) + (size_of_actual_set^beta)). If alpha and beta are 1
+    then is the same as calculating the F1 score.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+    - alpha (float, optional): Controls the weight of the intersection. Defaults to 1.5.
+    - beta (float, optional): Controls the exponent in the denominator. Defaults to 1.0.
+
+    Return:
+    float: Dice Similarity Coefficient value.
+
+    Example:
+    &gt;&gt;&gt; dice_value = dice_similarity(predicted_set, actual_set, alpha=1.5, beta=1.0)
+    &gt;&gt;&gt; print(dice_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the size of the intersection, size of predicted set, and size of actual set
+    intersection_size = len(predicted.intersection(actual))
+    size_of_predicted_set = len(predicted)
+    size_of_actual_set = len(actual)
+
+    # Calculate the numerator and denominator for the Dice similarity coefficient
+    numerator = alpha * intersection_size
+    denominator = (alpha * size_of_predicted_set ** beta) + (size_of_actual_set ** beta)
+
+    # Check if the denominator is zero to avoid division by zero
+    if denominator != 0:
+        # Calculate and return the Dice similarity coefficient
+        return 2 * numerator / denominator
+    else:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+
+
+def accuracy(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Accuracy metric for binary classification.
+
+    Synopse:
+    Accuracy measures the proportion of correctly predicted instances.
+
+    Details:
+    It is computed by counting the correct predictions (true positives and true negatives)
+    and then calculating the ratio of correct predictions to the total number of instances.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Accuracy metric value.
+
+    Example:
+    &gt;&gt;&gt; accuracy_value = accuracy(predicted_set, actual_set)
+    &gt;&gt;&gt; print(accuracy_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the number of correct predictions and the total number of instances
+    correct_predictions = len(predicted &amp; actual)
+    total_instances = len(actual)
+
+    # Check if the total number of instances is zero to avoid division by zero
+    if total_instances != 0:
+        # Calculate and return the accuracy
+        return correct_predictions / total_instances
+    else:
+        # Return 0.0 if the total number of instances is zero to handle the edge case
+        return 0.0</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="QIDLearningLib.metrics.performance.accuracy"><code class="name flex">
+<span>def <span class="ident">accuracy</span></span>(<span>predicted: set, actual: set) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Accuracy metric for binary classification.</p>
+<p>Synopse:
+Accuracy measures the proportion of correctly predicted instances.</p>
+<p>Details:
+It is computed by counting the correct predictions (true positives and true negatives)
+and then calculating the ratio of correct predictions to the total number of instances.</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.</p>
+<p>Return:
+float: Accuracy metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; accuracy_value = accuracy(predicted_set, actual_set)
+&gt;&gt;&gt; print(accuracy_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def accuracy(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Accuracy metric for binary classification.
+
+    Synopse:
+    Accuracy measures the proportion of correctly predicted instances.
+
+    Details:
+    It is computed by counting the correct predictions (true positives and true negatives)
+    and then calculating the ratio of correct predictions to the total number of instances.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Accuracy metric value.
+
+    Example:
+    &gt;&gt;&gt; accuracy_value = accuracy(predicted_set, actual_set)
+    &gt;&gt;&gt; print(accuracy_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the number of correct predictions and the total number of instances
+    correct_predictions = len(predicted &amp; actual)
+    total_instances = len(actual)
+
+    # Check if the total number of instances is zero to avoid division by zero
+    if total_instances != 0:
+        # Calculate and return the accuracy
+        return correct_predictions / total_instances
+    else:
+        # Return 0.0 if the total number of instances is zero to handle the edge case
+        return 0.0</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.dice_similarity"><code class="name flex">
+<span>def <span class="ident">dice_similarity</span></span>(<span>predicted: set, actual: set, alpha: float = 1.0, beta: float = 1.0) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Dice Similarity Coefficient for binary classification.</p>
+<p>Synopse:
+Dice Similarity Coefficient measures the similarity between predicted and actual sets.</p>
+<p>Details:
+It is computed by calculating the size of the intersection and the total size of predicted and actual sets,
+and then applying the formula: (alpha * intersection_size^beta) / ((alpha * size_of_predicted_set^beta) + (size_of_actual_set^beta)). If alpha and beta are 1
+then is the same as calculating the F1 score.</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.
+- alpha (float, optional): Controls the weight of the intersection. Defaults to 1.5.
+- beta (float, optional): Controls the exponent in the denominator. Defaults to 1.0.</p>
+<p>Return:
+float: Dice Similarity Coefficient value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; dice_value = dice_similarity(predicted_set, actual_set, alpha=1.5, beta=1.0)
+&gt;&gt;&gt; print(dice_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dice_similarity(predicted: set, actual: set, alpha: float = 1.0, beta: float = 1.0) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Dice Similarity Coefficient for binary classification.
+
+    Synopse:
+    Dice Similarity Coefficient measures the similarity between predicted and actual sets.
+
+    Details:
+    It is computed by calculating the size of the intersection and the total size of predicted and actual sets,
+    and then applying the formula: (alpha * intersection_size^beta) / ((alpha * size_of_predicted_set^beta) + (size_of_actual_set^beta)). If alpha and beta are 1
+    then is the same as calculating the F1 score.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+    - alpha (float, optional): Controls the weight of the intersection. Defaults to 1.5.
+    - beta (float, optional): Controls the exponent in the denominator. Defaults to 1.0.
+
+    Return:
+    float: Dice Similarity Coefficient value.
+
+    Example:
+    &gt;&gt;&gt; dice_value = dice_similarity(predicted_set, actual_set, alpha=1.5, beta=1.0)
+    &gt;&gt;&gt; print(dice_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the size of the intersection, size of predicted set, and size of actual set
+    intersection_size = len(predicted.intersection(actual))
+    size_of_predicted_set = len(predicted)
+    size_of_actual_set = len(actual)
+
+    # Calculate the numerator and denominator for the Dice similarity coefficient
+    numerator = alpha * intersection_size
+    denominator = (alpha * size_of_predicted_set ** beta) + (size_of_actual_set ** beta)
+
+    # Check if the denominator is zero to avoid division by zero
+    if denominator != 0:
+        # Calculate and return the Dice similarity coefficient
+        return 2 * numerator / denominator
+    else:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.f1_score"><code class="name flex">
+<span>def <span class="ident">f1_score</span></span>(<span>predicted: set, actual: set) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the F1 Score metric for binary classification.</p>
+<p>Synopse:
+F1 Score is the harmonic mean of Precision and Recall.</p>
+<p>Details:
+It is computed by calculating Precision and Recall using the provided sets of predicted and actual instances
+and then applying the formula: 2 * (precision * recall) / (precision + recall).</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.</p>
+<p>Return:
+float: F1 Score metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; f1_score_value = f1_score(predicted_set, actual_set)
+&gt;&gt;&gt; print(f1_score_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def f1_score(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the F1 Score metric for binary classification.
+
+    Synopse:
+    F1 Score is the harmonic mean of Precision and Recall.
+
+    Details:
+    It is computed by calculating Precision and Recall using the provided sets of predicted and actual instances
+    and then applying the formula: 2 * (precision * recall) / (precision + recall).
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: F1 Score metric value.
+
+    Example:
+    &gt;&gt;&gt; f1_score_value = f1_score(predicted_set, actual_set)
+    &gt;&gt;&gt; print(f1_score_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate precision and recall using the specified functions
+    prec = precision(predicted, actual)
+    rec = recall(predicted, actual)
+
+    # Check if the sum of precision and recall is zero to avoid division by zero
+    if prec + rec == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the F1 score by applying the formula: 2 * (precision * recall) / (precision + recall)
+        return 2 * (prec * rec) / (prec + rec)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.f2_score"><code class="name flex">
+<span>def <span class="ident">f2_score</span></span>(<span>predicted: set, actual: set, beta: float = 2.0) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the F2 Score metric for binary classification.</p>
+<p>Synopse:
+F2 Score is the harmonic mean of Precision and Recall with emphasis on recall.</p>
+<p>Details:
+It is computed by calculating Precision and Recall using the provided sets of predicted and actual instances
+and then applying the formula: (1 + beta^2) * (precision * recall) / (beta^2 * precision + recall).</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.
+- beta (float, optional): Controls the trade-off between precision and recall. Defaults to 2.0.</p>
+<p>Return:
+float: F2 Score metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; f2_score_value = f2_score(predicted_set, actual_set, beta=2.0)
+&gt;&gt;&gt; print(f2_score_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def f2_score(predicted: set, actual: set, beta: float = 2.0) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the F2 Score metric for binary classification.
+
+    Synopse:
+    F2 Score is the harmonic mean of Precision and Recall with emphasis on recall.
+
+    Details:
+    It is computed by calculating Precision and Recall using the provided sets of predicted and actual instances
+    and then applying the formula: (1 + beta^2) * (precision * recall) / (beta^2 * precision + recall).
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+    - beta (float, optional): Controls the trade-off between precision and recall. Defaults to 2.0.
+
+    Return:
+    float: F2 Score metric value.
+
+    Example:
+    &gt;&gt;&gt; f2_score_value = f2_score(predicted_set, actual_set, beta=2.0)
+    &gt;&gt;&gt; print(f2_score_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate true positives, false positives, and false negatives
+    true_positives = len(predicted.intersection(actual))
+    false_positives = len(predicted - actual)
+    false_negatives = len(actual - predicted)
+
+    # Calculate precision and recall, handling the case where the denominator is zero
+    precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) != 0 else 0
+    recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) != 0 else 0
+
+    # Check if precision + recall is zero to avoid division by zero
+    if precision + recall == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Calculate the F-beta score using the specified beta value
+        numerator = (1 + beta ** 2) * precision * recall
+        denominator = (beta ** 2 * precision) + recall
+        return numerator / denominator</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.fpr"><code class="name flex">
+<span>def <span class="ident">fpr</span></span>(<span>predicted: set, actual: set) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the False Positive Rate (FPR) metric for binary classification.</p>
+<p>Synopse:
+FPR measures the proportion of false positives among all actual negatives.</p>
+<p>Details:
+It is computed by counting the true negatives and false positives and then calculating the ratio of false positives
+to the sum of true negatives and false positives.</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.</p>
+<p>Return:
+float: FPR metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; fpr_value = fpr(predicted_set, actual_set)
+&gt;&gt;&gt; print(fpr_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fpr(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the False Positive Rate (FPR) metric for binary classification.
+
+    Synopse:
+    FPR measures the proportion of false positives among all actual negatives.
+
+    Details:
+    It is computed by counting the true negatives and false positives and then calculating the ratio of false positives
+    to the sum of true negatives and false positives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: FPR metric value.
+
+    Example:
+    &gt;&gt;&gt; fpr_value = fpr(predicted_set, actual_set)
+    &gt;&gt;&gt; print(fpr_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true negatives by finding instances that are in the actual set but not in the predicted set
+    true_negatives = len(actual - predicted)
+
+    # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
+    false_positives = len(predicted - actual)
+
+    # Check if the sum of true negatives and false positives is zero to avoid division by zero
+    if true_negatives + false_positives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the false positive rate metric by dividing false positives by the sum of true negatives and false positives
+        return false_positives / (true_negatives + false_positives)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.jaccard_similarity"><code class="name flex">
+<span>def <span class="ident">jaccard_similarity</span></span>(<span>predicted: set, actual: set) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Jaccard Similarity metric for binary classification.</p>
+<p>Synopse:
+Jaccard Similarity measures the intersection over union of predicted and actual sets.</p>
+<p>Details:
+It is computed by calculating the size of the intersection and the size of the union of predicted and actual sets,
+and then applying the formula: intersection_size / union_size.</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.</p>
+<p>Return:
+float: Jaccard Similarity metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; jaccard_value = jaccard_similarity(predicted_set, actual_set)
+&gt;&gt;&gt; print(jaccard_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def jaccard_similarity(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Jaccard Similarity metric for binary classification.
+
+    Synopse:
+    Jaccard Similarity measures the intersection over union of predicted and actual sets.
+
+    Details:
+    It is computed by calculating the size of the intersection and the size of the union of predicted and actual sets,
+    and then applying the formula: intersection_size / union_size.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Jaccard Similarity metric value.
+
+    Example:
+    &gt;&gt;&gt; jaccard_value = jaccard_similarity(predicted_set, actual_set)
+    &gt;&gt;&gt; print(jaccard_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the size of the intersection and union of the sets
+    intersection_size = len(predicted &amp; actual)
+    union_size = len(predicted | actual)
+
+    # Check if the union size is zero to avoid division by zero
+    if union_size == 0:
+        # Return 0.0 if the union size is zero to handle the edge case
+        return 0.0
+    else:
+        # Calculate the Jaccard similarity
+        return intersection_size / union_size</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.precision"><code class="name flex">
+<span>def <span class="ident">precision</span></span>(<span>predicted: set, actual: set) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Precision metric for binary classification.</p>
+<p>Synopse:
+Precision measures the proportion of true positives among all predicted positives.</p>
+<p>Details:
+It is computed by counting the true positives (instances correctly predicted as positives) and false positives
+and then calculating the ratio of true positives to the sum of true positives and false positives.</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.</p>
+<p>Return:
+float: Precision metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; precision_value = precision(predicted_set, actual_set)
+&gt;&gt;&gt; print(precision_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def precision(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Precision metric for binary classification.
+
+    Synopse:
+    Precision measures the proportion of true positives among all predicted positives.
+
+    Details:
+    It is computed by counting the true positives (instances correctly predicted as positives) and false positives
+    and then calculating the ratio of true positives to the sum of true positives and false positives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Precision metric value.
+
+    Example:
+    &gt;&gt;&gt; precision_value = precision(predicted_set, actual_set)
+    &gt;&gt;&gt; print(precision_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true positives by finding instances that are both in the predicted and actual sets
+    true_positives = len(predicted &amp; actual)
+
+    # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
+    false_positives = len(predicted - actual)
+
+    # Check if the sum of true positives and false positives is zero to avoid division by zero
+    if true_positives + false_positives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the precision metric by dividing true positives by the sum of true positives and false positives
+        return true_positives / (true_positives + false_positives)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.recall"><code class="name flex">
+<span>def <span class="ident">recall</span></span>(<span>predicted: set, actual: set) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Recall (Sensitivity) metric for binary classification.</p>
+<p>Synopse:
+Recall measures the proportion of true positives among all actual positives.</p>
+<p>Details:
+It is computed by counting the true positives and false negatives (instances incorrectly predicted as negatives)
+and then calculating the ratio of true positives to the sum of true positives and false negatives.</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.</p>
+<p>Return:
+float: Recall metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; recall_value = recall(predicted_set, actual_set)
+&gt;&gt;&gt; print(recall_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def recall(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Recall (Sensitivity) metric for binary classification.
+
+    Synopse:
+    Recall measures the proportion of true positives among all actual positives.
+
+    Details:
+    It is computed by counting the true positives and false negatives (instances incorrectly predicted as negatives)
+    and then calculating the ratio of true positives to the sum of true positives and false negatives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Recall metric value.
+
+    Example:
+    &gt;&gt;&gt; recall_value = recall(predicted_set, actual_set)
+    &gt;&gt;&gt; print(recall_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true positives by finding instances that are both in the predicted and actual sets
+    true_positives = len(predicted &amp; actual)
+
+    # Calculate the false negatives by finding instances that are in the actual set but not in the predicted set
+    false_negatives = len(actual - predicted)
+
+    # Check if the sum of true positives and false negatives is zero to avoid division by zero
+    if true_positives + false_negatives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the recall metric by dividing true positives by the sum of true positives and false negatives
+        return true_positives / (true_positives + false_negatives)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.performance.specificity"><code class="name flex">
+<span>def <span class="ident">specificity</span></span>(<span>predicted: set, actual: set) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Specificity metric for binary classification.</p>
+<p>Synopse:
+Specificity measures the proportion of true negatives among all actual negatives.</p>
+<p>Details:
+It is computed by counting the true negatives (instances correctly predicted as negatives) and
+false positives (instances incorrectly predicted as positives) and then calculating the ratio of true negatives
+to the sum of true negatives and false positives.</p>
+<p>Parameters:
+- predicted (set): Set of predicted positive instances.
+- actual (set): Set of actual positive instances.</p>
+<p>Return:
+float: Specificity metric value.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; spec_value = specificity(predicted_set, actual_set)
+&gt;&gt;&gt; print(spec_value)
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def specificity(predicted: set, actual: set) -&gt; float:
+    &#34;&#34;&#34;
+    Calculate the Specificity metric for binary classification.
+
+    Synopse:
+    Specificity measures the proportion of true negatives among all actual negatives.
+
+    Details:
+    It is computed by counting the true negatives (instances correctly predicted as negatives) and
+    false positives (instances incorrectly predicted as positives) and then calculating the ratio of true negatives
+    to the sum of true negatives and false positives.
+
+    Parameters:
+    - predicted (set): Set of predicted positive instances.
+    - actual (set): Set of actual positive instances.
+
+    Return:
+    float: Specificity metric value.
+
+    Example:
+    &gt;&gt;&gt; spec_value = specificity(predicted_set, actual_set)
+    &gt;&gt;&gt; print(spec_value)
+
+    &#34;&#34;&#34;
+
+    # Calculate the true negatives by finding instances that are in the actual set but not in the predicted set
+    true_negatives = len(actual - predicted)
+
+    # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
+    false_positives = len(predicted - actual)
+
+    # Check if the sum of true negatives and false positives is zero to avoid division by zero
+    if true_negatives + false_positives == 0:
+        # Return 0.0 if the denominator is zero to handle the edge case
+        return 0.0
+    else:
+        # Return the specificity metric by dividing true negatives by the sum of true negatives and false positives
+        return true_negatives / (true_negatives + false_positives)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="QIDLearningLib.metrics" href="index.html">QIDLearningLib.metrics</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="QIDLearningLib.metrics.performance.accuracy" href="#QIDLearningLib.metrics.performance.accuracy">accuracy</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.dice_similarity" href="#QIDLearningLib.metrics.performance.dice_similarity">dice_similarity</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.f1_score" href="#QIDLearningLib.metrics.performance.f1_score">f1_score</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.f2_score" href="#QIDLearningLib.metrics.performance.f2_score">f2_score</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.fpr" href="#QIDLearningLib.metrics.performance.fpr">fpr</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.jaccard_similarity" href="#QIDLearningLib.metrics.performance.jaccard_similarity">jaccard_similarity</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.precision" href="#QIDLearningLib.metrics.performance.precision">precision</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.recall" href="#QIDLearningLib.metrics.performance.recall">recall</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.performance.specificity" href="#QIDLearningLib.metrics.performance.specificity">specificity</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

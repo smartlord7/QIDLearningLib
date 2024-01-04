@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>QIDLearningLib.metrics.data_utility API documentation</title>
+<meta name="description" content="QIDLearningLib …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>QIDLearningLib.metrics.data_utility</code></h1>
+</header>
+<section id="section-intro">
+<p>QIDLearningLib</p>
+<p>Library Description:
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.</p>
+<p>Module Description (metrics.data_utility):
+This module in QIDLearningLib includes functions to calculate various metrics related to the data utility regarding the quasi identifiers.
+These metrics measure aspects such as the predictive power of each quasi identifier group</p>
+<p>Year: 2023/2024
+Institution: University of Coimbra
+Department: Department of Informatics Engineering
+Program: Master's in Informatics Engineering - Intelligent Systems
+Author: Sancho Amaral Simões
+Student No: 2019217590
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
+Version: v0.01</p>
+<p>License:
+This open-source software is released under the terms of the GNU General Public License, version 3 (GPL-3.0).
+For more details, see <a href="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+QIDLearningLib
+
+Library Description:
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+
+Module Description (metrics.data_utility):
+This module in QIDLearningLib includes functions to calculate various metrics related to the data utility regarding the quasi identifiers.
+These metrics measure aspects such as the predictive power of each quasi identifier group
+
+Year: 2023/2024
+Institution: University of Coimbra
+Department: Department of Informatics Engineering
+Program: Master&#39;s in Informatics Engineering - Intelligent Systems
+Author: Sancho Amaral Simões
+Student No: 2019217590
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
+Version: v0.01
+
+License:
+This open-source software is released under the terms of the GNU General Public License, version 3 (GPL-3.0).
+For more details, see https://www.gnu.org/licenses/gpl-3.0.html
+
+&#34;&#34;&#34;
+
+import numpy as np
+import pandas as pd
+from sklearn.metrics import mean_squared_error, accuracy_score
+
+from QIDLearningLib.structure.grouped_metric import GroupedMetric
+
+
+def mean_squared_err(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pd.Series) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Mean Squared Error metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Mean Squared Error measures the average squared difference between true and predicted values.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers, calculating the mean of the target
+    attribute within each group, and then calculating the mean squared error for each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which MSE is calculated.
+    - true_values (pd.Series): Series containing true values corresponding to the target attribute.
+
+    Return:
+    GroupedMetric: Mean Squared Error metric for each group.
+
+    Example:
+    &gt;&gt;&gt; mse_metric = mean_squared_err(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;, true_income_values)
+    &gt;&gt;&gt; print(repr(mse_metric))
+
+    See Also:
+    - accuracy: Calculates the Accuracy metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store mean squared error values for each group
+    mse_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Generate a list of predicted values with the mean of the target attribute for the current group
+        predicted_values = [group_df[target_attribute].mean()] * len(group_df)
+
+        # Calculate mean squared error for the current group
+        mse = mean_squared_error(true_values.loc[group_df.index], predicted_values)
+
+        # Append the calculated mean squared error to the list
+        mse_values.append(mse)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated mean squared error values, group labels, and a name
+    return GroupedMetric(np.array(mse_values), group_labels, name=&#39;Mean Squared Error&#39;)
+
+
+def accuracy(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pd.Series) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Accuracy metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Accuracy measures the proportion of correctly predicted instances.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers, determining the mode of the target
+    attribute within each group, and then calculating the accuracy using the mode as the predicted value.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which accuracy is calculated.
+    - true_values (pd.Series): Series containing true values corresponding to the target attribute.
+
+    Return:
+    GroupedMetric: Accuracy metric for each group.
+
+    Example:
+    &gt;&gt;&gt; accuracy_metric = accuracy(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;, true_income_values)
+    &gt;&gt;&gt; print(repr(accuracy_metric))
+
+    See Also:
+    - mean_squared_err: Calculates the Mean Squared Error metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store accuracy values for each group
+    accuracy_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Generate a list of predicted values with the mode of the target attribute for the current group
+        predicted_values = [group_df[target_attribute].mode().iloc[0]] * len(group_df)
+
+        # Extract true values corresponding to the current group
+        true_values_group = true_values.loc[group_df.index]
+
+        # Calculate accuracy for the current group
+        accuracy = accuracy_score(true_values_group, predicted_values)
+
+        # Append the calculated accuracy to the list
+        accuracy_values.append(accuracy)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated accuracy values, group labels, and a name
+    return GroupedMetric(np.array(accuracy_values), group_labels, name=&#39;Accuracy&#39;)
+
+
+def utility_score(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, scoring_function: callable) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Utility Score metric for a given DataFrame and quasi-identifiers using a custom scoring function.
+
+    Synopse:
+    Utility Score measures the utility of the data based on a user-defined scoring function.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and applying the user-defined scoring
+    function to the target attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which utility is calculated.
+    - scoring_function (callable): A scoring function that takes a pandas Series as input and returns a utility score.
+
+    Return:
+    GroupedMetric: Utility Score metric for each group.
+
+    Example:
+    &gt;&gt;&gt; utility_metric = utility_score(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;, lambda x: x.sum())
+    &gt;&gt;&gt; print(repr(utility_metric))
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store utility values for each group
+    utility_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the utility for the current group using the specified scoring function
+        group_utility = scoring_function(group_df[target_attribute])
+
+        # Append the calculated utility to the list
+        utility_values.append(group_utility)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated utility values, group labels, and a name
+    return GroupedMetric(np.array(utility_values), group_labels, name=&#39;Utility Score&#39;)
+
+
+def range_utility(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Range Utility metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Range Utility measures the range (difference between max and min) of the target attribute.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the range of the target
+    attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which range utility is calculated.
+
+    Return:
+    GroupedMetric: Range Utility metric for each group.
+
+    Example:
+    &gt;&gt;&gt; range_utility_metric = range_utility(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;)
+    &gt;&gt;&gt; print(repr(range_utility_metric))
+
+    See Also:
+    - utility_score: Calculates the Utility Score metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store range utility values for each group
+    range_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the range utility for the current group
+        group_range = group_df[target_attribute].max() - group_df[target_attribute].min()
+
+        # Append the calculated range utility to the list
+        range_values.append(group_range)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated range utility values, group labels, and a name
+    return GroupedMetric(np.array(range_values), group_labels, name=&#39;Range Utility&#39;)
+
+
+def distinct_values_utility(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Distinct Values Utility metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Distinct Values Utility measures the number of unique values in the target attribute.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the number of distinct
+    values in the target attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which distinct values utility is calculated.
+
+    Return:
+    GroupedMetric: Distinct Values Utility metric for each group.
+
+    Example:
+    &gt;&gt;&gt; distinct_values_metric = distinct_values_utility(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;)
+    &gt;&gt;&gt; print(repr(distinct_values_metric))
+
+    See Also:
+    - utility_score: Calculates the Utility Score metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store distinct values utility for each group
+    distinct_values_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the number of distinct values in the target attribute for the current group
+        distinct_values = group_df[target_attribute].nunique()
+
+        # Append the calculated distinct values utility to the list
+        distinct_values_values.append(distinct_values)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated distinct values utility, group labels, and a name
+    return GroupedMetric(np.array(distinct_values_values), group_labels, name=&#39;Distinct Values Utility&#39;)
+
+
+def completeness_utility(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Completeness Utility metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Completeness Utility measures the proportion of instances with non-null values in the target attribute.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the completeness (ratio
+    of non-null values) of the target attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which completeness utility is calculated.
+
+    Return:
+    GroupedMetric: Completeness Utility metric for each group.
+
+    Example:
+    &gt;&gt;&gt; completeness_metric = completeness_utility(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;)
+    &gt;&gt;&gt; print(repr(completeness_metric))
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store completeness utility values for each group
+    completeness_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate completeness (ratio of non-null values) of the target attribute for the current group
+        completeness = group_df[target_attribute].count() / len(group_df)
+
+        # Append the calculated completeness utility to the list
+        completeness_values.append(completeness)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated completeness utility values, group labels, and a name
+    return GroupedMetric(np.array(completeness_values), group_labels, name=&#39;Completeness Utility&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="QIDLearningLib.metrics.data_utility.accuracy"><code class="name flex">
+<span>def <span class="ident">accuracy</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pandas.core.series.Series) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Accuracy metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopse:
+Accuracy measures the proportion of correctly predicted instances.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers, determining the mode of the target
+attribute within each group, and then calculating the accuracy using the mode as the predicted value.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- target_attribute (str): The target attribute for which accuracy is calculated.
+- true_values (pd.Series): Series containing true values corresponding to the target attribute.</p>
+<p>Return:
+GroupedMetric: Accuracy metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; accuracy_metric = accuracy(df, ['Age', 'Gender'], 'Income', true_income_values)
+&gt;&gt;&gt; print(repr(accuracy_metric))
+</code></pre>
+<p>See Also:
+- mean_squared_err: Calculates the Mean Squared Error metric.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def accuracy(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pd.Series) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Accuracy metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Accuracy measures the proportion of correctly predicted instances.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers, determining the mode of the target
+    attribute within each group, and then calculating the accuracy using the mode as the predicted value.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which accuracy is calculated.
+    - true_values (pd.Series): Series containing true values corresponding to the target attribute.
+
+    Return:
+    GroupedMetric: Accuracy metric for each group.
+
+    Example:
+    &gt;&gt;&gt; accuracy_metric = accuracy(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;, true_income_values)
+    &gt;&gt;&gt; print(repr(accuracy_metric))
+
+    See Also:
+    - mean_squared_err: Calculates the Mean Squared Error metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store accuracy values for each group
+    accuracy_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Generate a list of predicted values with the mode of the target attribute for the current group
+        predicted_values = [group_df[target_attribute].mode().iloc[0]] * len(group_df)
+
+        # Extract true values corresponding to the current group
+        true_values_group = true_values.loc[group_df.index]
+
+        # Calculate accuracy for the current group
+        accuracy = accuracy_score(true_values_group, predicted_values)
+
+        # Append the calculated accuracy to the list
+        accuracy_values.append(accuracy)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated accuracy values, group labels, and a name
+    return GroupedMetric(np.array(accuracy_values), group_labels, name=&#39;Accuracy&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_utility.completeness_utility"><code class="name flex">
+<span>def <span class="ident">completeness_utility</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, target_attribute: str) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Completeness Utility metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopse:
+Completeness Utility measures the proportion of instances with non-null values in the target attribute.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the completeness (ratio
+of non-null values) of the target attribute within each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- target_attribute (str): The target attribute for which completeness utility is calculated.</p>
+<p>Return:
+GroupedMetric: Completeness Utility metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; completeness_metric = completeness_utility(df, ['Age', 'Gender'], 'Income')
+&gt;&gt;&gt; print(repr(completeness_metric))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def completeness_utility(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Completeness Utility metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Completeness Utility measures the proportion of instances with non-null values in the target attribute.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the completeness (ratio
+    of non-null values) of the target attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which completeness utility is calculated.
+
+    Return:
+    GroupedMetric: Completeness Utility metric for each group.
+
+    Example:
+    &gt;&gt;&gt; completeness_metric = completeness_utility(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;)
+    &gt;&gt;&gt; print(repr(completeness_metric))
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store completeness utility values for each group
+    completeness_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate completeness (ratio of non-null values) of the target attribute for the current group
+        completeness = group_df[target_attribute].count() / len(group_df)
+
+        # Append the calculated completeness utility to the list
+        completeness_values.append(completeness)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated completeness utility values, group labels, and a name
+    return GroupedMetric(np.array(completeness_values), group_labels, name=&#39;Completeness Utility&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_utility.distinct_values_utility"><code class="name flex">
+<span>def <span class="ident">distinct_values_utility</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, target_attribute: str) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Distinct Values Utility metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopse:
+Distinct Values Utility measures the number of unique values in the target attribute.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the number of distinct
+values in the target attribute within each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- target_attribute (str): The target attribute for which distinct values utility is calculated.</p>
+<p>Return:
+GroupedMetric: Distinct Values Utility metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; distinct_values_metric = distinct_values_utility(df, ['Age', 'Gender'], 'Income')
+&gt;&gt;&gt; print(repr(distinct_values_metric))
+</code></pre>
+<p>See Also:
+- utility_score: Calculates the Utility Score metric.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def distinct_values_utility(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Distinct Values Utility metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Distinct Values Utility measures the number of unique values in the target attribute.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the number of distinct
+    values in the target attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which distinct values utility is calculated.
+
+    Return:
+    GroupedMetric: Distinct Values Utility metric for each group.
+
+    Example:
+    &gt;&gt;&gt; distinct_values_metric = distinct_values_utility(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;)
+    &gt;&gt;&gt; print(repr(distinct_values_metric))
+
+    See Also:
+    - utility_score: Calculates the Utility Score metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store distinct values utility for each group
+    distinct_values_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the number of distinct values in the target attribute for the current group
+        distinct_values = group_df[target_attribute].nunique()
+
+        # Append the calculated distinct values utility to the list
+        distinct_values_values.append(distinct_values)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated distinct values utility, group labels, and a name
+    return GroupedMetric(np.array(distinct_values_values), group_labels, name=&#39;Distinct Values Utility&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_utility.mean_squared_err"><code class="name flex">
+<span>def <span class="ident">mean_squared_err</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pandas.core.series.Series) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Mean Squared Error metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopse:
+Mean Squared Error measures the average squared difference between true and predicted values.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers, calculating the mean of the target
+attribute within each group, and then calculating the mean squared error for each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- target_attribute (str): The target attribute for which MSE is calculated.
+- true_values (pd.Series): Series containing true values corresponding to the target attribute.</p>
+<p>Return:
+GroupedMetric: Mean Squared Error metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; mse_metric = mean_squared_err(df, ['Age', 'Gender'], 'Income', true_income_values)
+&gt;&gt;&gt; print(repr(mse_metric))
+</code></pre>
+<p>See Also:
+- accuracy: Calculates the Accuracy metric.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mean_squared_err(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pd.Series) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Mean Squared Error metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Mean Squared Error measures the average squared difference between true and predicted values.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers, calculating the mean of the target
+    attribute within each group, and then calculating the mean squared error for each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which MSE is calculated.
+    - true_values (pd.Series): Series containing true values corresponding to the target attribute.
+
+    Return:
+    GroupedMetric: Mean Squared Error metric for each group.
+
+    Example:
+    &gt;&gt;&gt; mse_metric = mean_squared_err(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;, true_income_values)
+    &gt;&gt;&gt; print(repr(mse_metric))
+
+    See Also:
+    - accuracy: Calculates the Accuracy metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store mean squared error values for each group
+    mse_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Generate a list of predicted values with the mean of the target attribute for the current group
+        predicted_values = [group_df[target_attribute].mean()] * len(group_df)
+
+        # Calculate mean squared error for the current group
+        mse = mean_squared_error(true_values.loc[group_df.index], predicted_values)
+
+        # Append the calculated mean squared error to the list
+        mse_values.append(mse)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated mean squared error values, group labels, and a name
+    return GroupedMetric(np.array(mse_values), group_labels, name=&#39;Mean Squared Error&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_utility.range_utility"><code class="name flex">
+<span>def <span class="ident">range_utility</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, target_attribute: str) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Range Utility metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopse:
+Range Utility measures the range (difference between max and min) of the target attribute.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the range of the target
+attribute within each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- target_attribute (str): The target attribute for which range utility is calculated.</p>
+<p>Return:
+GroupedMetric: Range Utility metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; range_utility_metric = range_utility(df, ['Age', 'Gender'], 'Income')
+&gt;&gt;&gt; print(repr(range_utility_metric))
+</code></pre>
+<p>See Also:
+- utility_score: Calculates the Utility Score metric.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def range_utility(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Range Utility metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Range Utility measures the range (difference between max and min) of the target attribute.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the range of the target
+    attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which range utility is calculated.
+
+    Return:
+    GroupedMetric: Range Utility metric for each group.
+
+    Example:
+    &gt;&gt;&gt; range_utility_metric = range_utility(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;)
+    &gt;&gt;&gt; print(repr(range_utility_metric))
+
+    See Also:
+    - utility_score: Calculates the Utility Score metric.
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store range utility values for each group
+    range_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the range utility for the current group
+        group_range = group_df[target_attribute].max() - group_df[target_attribute].min()
+
+        # Append the calculated range utility to the list
+        range_values.append(group_range)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated range utility values, group labels, and a name
+    return GroupedMetric(np.array(range_values), group_labels, name=&#39;Range Utility&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_utility.utility_score"><code class="name flex">
+<span>def <span class="ident">utility_score</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, target_attribute: str, scoring_function: <built-in function callable>) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Utility Score metric for a given DataFrame and quasi-identifiers using a custom scoring function.</p>
+<p>Synopse:
+Utility Score measures the utility of the data based on a user-defined scoring function.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and applying the user-defined scoring
+function to the target attribute within each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- target_attribute (str): The target attribute for which utility is calculated.
+- scoring_function (callable): A scoring function that takes a pandas Series as input and returns a utility score.</p>
+<p>Return:
+GroupedMetric: Utility Score metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; utility_metric = utility_score(df, ['Age', 'Gender'], 'Income', lambda x: x.sum())
+&gt;&gt;&gt; print(repr(utility_metric))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def utility_score(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, scoring_function: callable) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Utility Score metric for a given DataFrame and quasi-identifiers using a custom scoring function.
+
+    Synopse:
+    Utility Score measures the utility of the data based on a user-defined scoring function.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and applying the user-defined scoring
+    function to the target attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which utility is calculated.
+    - scoring_function (callable): A scoring function that takes a pandas Series as input and returns a utility score.
+
+    Return:
+    GroupedMetric: Utility Score metric for each group.
+
+    Example:
+    &gt;&gt;&gt; utility_metric = utility_score(df, [&#39;Age&#39;, &#39;Gender&#39;], &#39;Income&#39;, lambda x: x.sum())
+    &gt;&gt;&gt; print(repr(utility_metric))
+
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store utility values for each group
+    utility_values = []
+
+    # Initialize an empty list to store group labels
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the utility for the current group using the specified scoring function
+        group_utility = scoring_function(group_df[target_attribute])
+
+        # Append the calculated utility to the list
+        utility_values.append(group_utility)
+
+        # Append the group_name (quasi_identifiers values) to the group_labels list
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated utility values, group labels, and a name
+    return GroupedMetric(np.array(utility_values), group_labels, name=&#39;Utility Score&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="QIDLearningLib.metrics" href="index.html">QIDLearningLib.metrics</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="QIDLearningLib.metrics.data_utility.accuracy" href="#QIDLearningLib.metrics.data_utility.accuracy">accuracy</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_utility.completeness_utility" href="#QIDLearningLib.metrics.data_utility.completeness_utility">completeness_utility</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_utility.distinct_values_utility" href="#QIDLearningLib.metrics.data_utility.distinct_values_utility">distinct_values_utility</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_utility.mean_squared_err" href="#QIDLearningLib.metrics.data_utility.mean_squared_err">mean_squared_err</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_utility.range_utility" href="#QIDLearningLib.metrics.data_utility.range_utility">range_utility</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_utility.utility_score" href="#QIDLearningLib.metrics.data_utility.utility_score">utility_score</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

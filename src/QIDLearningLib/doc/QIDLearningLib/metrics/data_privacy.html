@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>QIDLearningLib.metrics.data_privacy API documentation</title>
+<meta name="description" content="QIDLearningLib …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>QIDLearningLib.metrics.data_privacy</code></h1>
+</header>
+<section id="section-intro">
+<p>QIDLearningLib</p>
+<p>Library Description:
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.</p>
+<p>Module Description (metrics.data_privacy):
+This module in QIDLearningLib includes functions to calculate various metrics related to the data privacy regarding the assumed quasi identifiers and/or sensitive attributes.</p>
+<p>Year: 2023/2024
+Institution: University of Coimbra
+Department: Department of Informatics Engineering
+Program: Master's in Informatics Engineering - Intelligent Systems
+Author: Sancho Amaral Simões
+Student No: 2019217590
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
+Version: v0.01</p>
+<p>License:
+This open-source software is released under the terms of the GNU General Public License, version 3 (GPL-3.0).
+For more details, see <a href="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+QIDLearningLib
+
+Library Description:
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+
+Module Description (metrics.data_privacy):
+This module in QIDLearningLib includes functions to calculate various metrics related to the data privacy regarding the assumed quasi identifiers and/or sensitive attributes.
+
+Year: 2023/2024
+Institution: University of Coimbra
+Department: Department of Informatics Engineering
+Program: Master&#39;s in Informatics Engineering - Intelligent Systems
+Author: Sancho Amaral Simões
+Student No: 2019217590
+Emails: sanchoamaralsimoes@gmail.com (Personal)| uc2019217590@student.uc.pt | sanchosimoes@student.dei.uc.pt
+Version: v0.01
+
+License:
+This open-source software is released under the terms of the GNU General Public License, version 3 (GPL-3.0).
+For more details, see https://www.gnu.org/licenses/gpl-3.0.html
+
+&#34;&#34;&#34;
+
+import numpy as np
+import pandas as pd
+from scipy.stats import wasserstein_distance
+from scipy.stats import entropy as scipy_entropy
+
+from QIDLearningLib.structure.grouped_metric import GroupedMetric
+
+
+def k_anonymity(df, quasi_identifiers):
+    &#34;&#34;&#34;
+    Calculate the k-Anonymity metric for a given DataFrame and quasi-identifiers.
+
+    Synopsis:
+    k-Anonymity measures the minimum group size of quasi-identifiers in a dataset, ensuring that each group has at least
+    k identical instances.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and determining the size of each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+
+    Return:
+    GroupedMetric: k-Anonymity metric for each group.
+
+    Example:
+    &gt;&gt;&gt; k_anonymity_metric = k_anonymity(df, [&#39;Age&#39;, &#39;Gender&#39;])
+    &gt;&gt;&gt; print(repr(k_anonymity_metric))
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Extract group labels from the grouped DataFrame
+    group_labels = [group_name for group_name, _ in grouped]
+
+    # Create a GroupedMetric object with the calculated k-Anonymity values, group labels, and a name
+    return GroupedMetric(np.array(grouped.size()), group_labels, name=&#39;k-Anonymity&#39;)
+
+
+def l_diversity(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the l-Diversity metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
+
+    Synopsis:
+    l-Diversity measures the minimum number of unique values in the sensitive attribute within each group defined by 
+    quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and counting the unique values in the
+    sensitive attribute for each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (str): The sensitive attribute for which l-Diversity is calculated.
+
+    Return:
+    GroupedMetric: l-Diversity metric for each group.
+
+    Example:
+    &gt;&gt;&gt; l_diversity_metric = l_diversity(df, [&#39;Age&#39;, &#39;Gender&#39;], [&#39;Disease&#39;])
+    &gt;&gt;&gt; print(repr(l_diversity_metric))
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store l-Diversity values for each group
+    unique_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Count the unique values in each sensitive attribute for the current group
+        unique_values.extend(group_df[sensitive_attributes].nunique().values)
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated l-Diversity values, group labels, and a name
+    return GroupedMetric(np.array(unique_values), group_labels, name=&#39;l-Diversity&#39;)
+
+
+def closeness_centrality(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list):
+    &#34;&#34;&#34;
+    Calculate the Closeness Centrality metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
+
+    Synopsis:
+    Closeness Centrality measures the Wasserstein distance between the overall distribution of the sensitive attribute
+    and the distribution within each group defined by quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the Wasserstein distance
+    between the overall distribution and the distribution within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (str): The sensitive attribute for which Closeness Centrality is calculated.
+
+    Return:
+    GroupedMetric: Closeness Centrality metric for each group.
+
+    Example:
+    &gt;&gt;&gt; closeness_centrality_metric = closeness_centrality(df, [&#39;Age&#39;, &#39;Gender&#39;], [&#39;Income&#39;])
+    &gt;&gt;&gt; print(repr(closeness_centrality_metric))
+    &#34;&#34;&#34;
+
+    # Calculate the overall distribution of the sensitive attribute
+    overall_distribution = df[sensitive_attributes].value_counts(normalize=True)
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store Closeness Centrality values for each group
+    closeness_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the distribution of the sensitive attribute within the current group
+        group_distribution = group_df[sensitive_attributes].value_counts(normalize=True)
+
+        # Check if the values in group_distribution are numeric
+        if all(isinstance(val, (int, float)) for val in group_distribution.index):
+            closeness = wasserstein_distance(overall_distribution.index.astype(float),
+                                             group_distribution.index.astype(float), overall_distribution.values,
+                                             group_distribution.values)
+        else:
+            # Convert categorical values to numerical indices
+            category_mapping = {val: i for i, val in enumerate(overall_distribution.index)}
+            overall_distribution_numeric = overall_distribution.index.map(category_mapping)
+            group_distribution_numeric = group_distribution.index.map(category_mapping)
+            closeness = wasserstein_distance(overall_distribution_numeric, group_distribution_numeric,
+                                             overall_distribution.values, group_distribution.values)
+
+        closeness_values.append(closeness)
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated Closeness Centrality values, group labels, and a name
+    return GroupedMetric(np.array(closeness_values), group_labels, name=&#39;Closeness Centrality&#39;)
+
+
+def delta_presence(df: pd.DataFrame, quasi_identifiers: list, values: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Delta Presence metric for a given DataFrame, quasi-identifier, and value.
+
+    Synopsis:
+    Delta Presence measures the absolute difference in the presence of a specific value in the quasi-identifier across
+    the entire dataset and within each group.
+
+    Details:
+    The metric is computed by comparing the presence of a specific value in the quasi-identifier across the entire dataset
+    and within each group defined by the quasi-identifier.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifier (str): The quasi-identifier for which Delta Presence is calculated.
+    - value: The value for which Delta Presence is calculated.
+
+    Return:
+    GroupedMetric: Delta Presence metric for each group.
+
+    Example:
+    &gt;&gt;&gt; delta_presence_metric = delta_presence(df, &#39;Age&#39;, 25)
+    &gt;&gt;&gt; print(repr(delta_presence_metric))
+    &#34;&#34;&#34;
+
+    # Calculate the overall presence of the values in the quasi_identifiers across the entire dataset
+    overall_presence = df[quasi_identifiers].value_counts(normalize=True).get(tuple(values), 0)
+
+    # Group the DataFrame based on quasi_identifier
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store Delta Presence values for each group
+    delta_presence_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the presence of the value in the quasi_identifier within the current group
+        group_presence = group_df[quasi_identifiers].value_counts(normalize=True).get(tuple(values), 0)
+
+        # Calculate Delta Presence for the current group
+        delta_presence = abs(overall_presence - group_presence)
+        delta_presence_values.append(delta_presence)
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated Delta Presence values, group labels, and a name
+    return GroupedMetric(np.array(delta_presence_values), group_labels, name=&#39;Delta Presence&#39;)
+
+
+def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes : list):
+    &#34;&#34;&#34;
+    Calculate the t-Closeness metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
+
+    Synopsis:
+    t-Closeness measures the Kullback-Leibler (KL) divergence between the distribution of the sensitive attribute within
+    each group defined by quasi-identifiers and the overall distribution.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the KL divergence for
+    each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (str): The sensitive attribute for which t-Closeness is calculated.
+
+    Return:
+    GroupedMetric: t-Closeness metric for each group.
+
+    Example:
+    &gt;&gt;&gt; t_closeness_metric = t_closeness(df, [&#39;Age&#39;, &#39;Gender&#39;], [&#39;Income&#39;])
+    &gt;&gt;&gt; print(repr(t_closeness_metric))
+    &#34;&#34;&#34;
+
+    # Calculate the overall distribution of the sensitive attribute
+    overall_distribution = df[sensitive_attributes].apply(lambda x: tuple(x), axis=1).value_counts(normalize=True)
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store t-Closeness values for each group
+    t_closeness_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the distribution of the sensitive attribute within the current group
+        group_distribution = group_df[sensitive_attributes].apply(lambda x: tuple(x), axis=1).value_counts(
+            normalize=True)
+
+        # Ensure that both distributions have the same index
+        common_index = overall_distribution.index.union(group_distribution.index)
+        overall_distribution = overall_distribution.reindex(common_index, fill_value=0)
+        group_distribution = group_distribution.reindex(common_index, fill_value=0)
+
+        # Calculate KL divergence using the entropy function
+        kl_divergence = scipy_entropy(group_distribution, qk=overall_distribution)
+
+        t_closeness_values.append(kl_divergence)
+
+        group_labels.append(group_name)
+
+    return GroupedMetric(np.array(t_closeness_values), group_labels, name=&#39;t-Closeness&#39;)
+
+
+def generalization_ratio(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Generalization Ratio metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Generalization Ratio measures the overall difference in the distribution of sensitive attributes between the entire
+    dataset and its grouped subsets based on quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the sum of absolute
+    differences in the distribution of sensitive attributes between the overall dataset and each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (list): List of column names representing sensitive attributes.
+
+    Return:
+    GroupedMetric: Generalization Ratio metric for each group.
+    &#34;&#34;&#34;
+
+    # Calculate the overall distribution of sensitive attributes
+    overall_distribution = df[sensitive_attributes].value_counts(normalize=True)
+
+    # Group the DataFrame based on quasi-identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store Generalization Ratio values for each group
+    generalization_ratio_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the distribution of sensitive attributes within the current group
+        group_distribution = group_df[sensitive_attributes].value_counts(normalize=True)
+
+        # Calculate the absolute differences and sum them up
+        generalization_ratio_values.append(np.sum(np.abs(overall_distribution - group_distribution)))
+
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated Generalization Ratio values, group labels, and a name
+    return GroupedMetric(np.array(generalization_ratio_values), group_labels, name=&#39;Generalization Ratio&#39;)
+
+
+def reciprocal_rank(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Reciprocal Rank metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Reciprocal Rank measures the quality of rankings based on the inverse of the rank position of the correct sensitive
+    attribute value within each group.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers, ranking the sensitive attribute values
+    in descending order within each group, and then calculating the reciprocal of the rank of the correct value.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (list): List of column names representing sensitive attributes.
+
+    Return:
+    GroupedMetric: Reciprocal Rank metric for each group.
+    &#34;&#34;&#34;
+
+    # Rank the sensitive attributes in descending order within each group
+    ranks = df.groupby(quasi_identifiers)[sensitive_attributes].rank(ascending=False)
+
+    # Calculate the reciprocal ranks
+    reciprocal_ranks = 1 / ranks
+    mrr_values = reciprocal_ranks.values
+
+    group_labels = [group_name for group_name, _ in df.groupby(quasi_identifiers)]
+
+    # Create a GroupedMetric object with the calculated Reciprocal Rank values, group labels, and a name
+    return GroupedMetric(mrr_values, group_labels, name=&#39;Reciprocal Rank&#39;)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="QIDLearningLib.metrics.data_privacy.closeness_centrality"><code class="name flex">
+<span>def <span class="ident">closeness_centrality</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, sensitive_attributes: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Closeness Centrality metric for a given DataFrame, quasi-identifiers, and sensitive attribute.</p>
+<p>Synopsis:
+Closeness Centrality measures the Wasserstein distance between the overall distribution of the sensitive attribute
+and the distribution within each group defined by quasi-identifiers.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the Wasserstein distance
+between the overall distribution and the distribution within each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- sensitive_attributes (str): The sensitive attribute for which Closeness Centrality is calculated.</p>
+<p>Return:
+GroupedMetric: Closeness Centrality metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; closeness_centrality_metric = closeness_centrality(df, ['Age', 'Gender'], ['Income'])
+&gt;&gt;&gt; print(repr(closeness_centrality_metric))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def closeness_centrality(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list):
+    &#34;&#34;&#34;
+    Calculate the Closeness Centrality metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
+
+    Synopsis:
+    Closeness Centrality measures the Wasserstein distance between the overall distribution of the sensitive attribute
+    and the distribution within each group defined by quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the Wasserstein distance
+    between the overall distribution and the distribution within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (str): The sensitive attribute for which Closeness Centrality is calculated.
+
+    Return:
+    GroupedMetric: Closeness Centrality metric for each group.
+
+    Example:
+    &gt;&gt;&gt; closeness_centrality_metric = closeness_centrality(df, [&#39;Age&#39;, &#39;Gender&#39;], [&#39;Income&#39;])
+    &gt;&gt;&gt; print(repr(closeness_centrality_metric))
+    &#34;&#34;&#34;
+
+    # Calculate the overall distribution of the sensitive attribute
+    overall_distribution = df[sensitive_attributes].value_counts(normalize=True)
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store Closeness Centrality values for each group
+    closeness_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the distribution of the sensitive attribute within the current group
+        group_distribution = group_df[sensitive_attributes].value_counts(normalize=True)
+
+        # Check if the values in group_distribution are numeric
+        if all(isinstance(val, (int, float)) for val in group_distribution.index):
+            closeness = wasserstein_distance(overall_distribution.index.astype(float),
+                                             group_distribution.index.astype(float), overall_distribution.values,
+                                             group_distribution.values)
+        else:
+            # Convert categorical values to numerical indices
+            category_mapping = {val: i for i, val in enumerate(overall_distribution.index)}
+            overall_distribution_numeric = overall_distribution.index.map(category_mapping)
+            group_distribution_numeric = group_distribution.index.map(category_mapping)
+            closeness = wasserstein_distance(overall_distribution_numeric, group_distribution_numeric,
+                                             overall_distribution.values, group_distribution.values)
+
+        closeness_values.append(closeness)
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated Closeness Centrality values, group labels, and a name
+    return GroupedMetric(np.array(closeness_values), group_labels, name=&#39;Closeness Centrality&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_privacy.delta_presence"><code class="name flex">
+<span>def <span class="ident">delta_presence</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, values: list) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Delta Presence metric for a given DataFrame, quasi-identifier, and value.</p>
+<p>Synopsis:
+Delta Presence measures the absolute difference in the presence of a specific value in the quasi-identifier across
+the entire dataset and within each group.</p>
+<p>Details:
+The metric is computed by comparing the presence of a specific value in the quasi-identifier across the entire dataset
+and within each group defined by the quasi-identifier.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifier (str): The quasi-identifier for which Delta Presence is calculated.
+- value: The value for which Delta Presence is calculated.</p>
+<p>Return:
+GroupedMetric: Delta Presence metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; delta_presence_metric = delta_presence(df, 'Age', 25)
+&gt;&gt;&gt; print(repr(delta_presence_metric))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delta_presence(df: pd.DataFrame, quasi_identifiers: list, values: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Delta Presence metric for a given DataFrame, quasi-identifier, and value.
+
+    Synopsis:
+    Delta Presence measures the absolute difference in the presence of a specific value in the quasi-identifier across
+    the entire dataset and within each group.
+
+    Details:
+    The metric is computed by comparing the presence of a specific value in the quasi-identifier across the entire dataset
+    and within each group defined by the quasi-identifier.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifier (str): The quasi-identifier for which Delta Presence is calculated.
+    - value: The value for which Delta Presence is calculated.
+
+    Return:
+    GroupedMetric: Delta Presence metric for each group.
+
+    Example:
+    &gt;&gt;&gt; delta_presence_metric = delta_presence(df, &#39;Age&#39;, 25)
+    &gt;&gt;&gt; print(repr(delta_presence_metric))
+    &#34;&#34;&#34;
+
+    # Calculate the overall presence of the values in the quasi_identifiers across the entire dataset
+    overall_presence = df[quasi_identifiers].value_counts(normalize=True).get(tuple(values), 0)
+
+    # Group the DataFrame based on quasi_identifier
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store Delta Presence values for each group
+    delta_presence_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the presence of the value in the quasi_identifier within the current group
+        group_presence = group_df[quasi_identifiers].value_counts(normalize=True).get(tuple(values), 0)
+
+        # Calculate Delta Presence for the current group
+        delta_presence = abs(overall_presence - group_presence)
+        delta_presence_values.append(delta_presence)
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated Delta Presence values, group labels, and a name
+    return GroupedMetric(np.array(delta_presence_values), group_labels, name=&#39;Delta Presence&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_privacy.generalization_ratio"><code class="name flex">
+<span>def <span class="ident">generalization_ratio</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, sensitive_attributes: list) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Generalization Ratio metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopse:
+Generalization Ratio measures the overall difference in the distribution of sensitive attributes between the entire
+dataset and its grouped subsets based on quasi-identifiers.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the sum of absolute
+differences in the distribution of sensitive attributes between the overall dataset and each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- sensitive_attributes (list): List of column names representing sensitive attributes.</p>
+<p>Return:
+GroupedMetric: Generalization Ratio metric for each group.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generalization_ratio(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Generalization Ratio metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Generalization Ratio measures the overall difference in the distribution of sensitive attributes between the entire
+    dataset and its grouped subsets based on quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the sum of absolute
+    differences in the distribution of sensitive attributes between the overall dataset and each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (list): List of column names representing sensitive attributes.
+
+    Return:
+    GroupedMetric: Generalization Ratio metric for each group.
+    &#34;&#34;&#34;
+
+    # Calculate the overall distribution of sensitive attributes
+    overall_distribution = df[sensitive_attributes].value_counts(normalize=True)
+
+    # Group the DataFrame based on quasi-identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store Generalization Ratio values for each group
+    generalization_ratio_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the distribution of sensitive attributes within the current group
+        group_distribution = group_df[sensitive_attributes].value_counts(normalize=True)
+
+        # Calculate the absolute differences and sum them up
+        generalization_ratio_values.append(np.sum(np.abs(overall_distribution - group_distribution)))
+
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated Generalization Ratio values, group labels, and a name
+    return GroupedMetric(np.array(generalization_ratio_values), group_labels, name=&#39;Generalization Ratio&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_privacy.k_anonymity"><code class="name flex">
+<span>def <span class="ident">k_anonymity</span></span>(<span>df, quasi_identifiers)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the k-Anonymity metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopsis:
+k-Anonymity measures the minimum group size of quasi-identifiers in a dataset, ensuring that each group has at least
+k identical instances.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and determining the size of each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.</p>
+<p>Return:
+GroupedMetric: k-Anonymity metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; k_anonymity_metric = k_anonymity(df, ['Age', 'Gender'])
+&gt;&gt;&gt; print(repr(k_anonymity_metric))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def k_anonymity(df, quasi_identifiers):
+    &#34;&#34;&#34;
+    Calculate the k-Anonymity metric for a given DataFrame and quasi-identifiers.
+
+    Synopsis:
+    k-Anonymity measures the minimum group size of quasi-identifiers in a dataset, ensuring that each group has at least
+    k identical instances.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and determining the size of each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+
+    Return:
+    GroupedMetric: k-Anonymity metric for each group.
+
+    Example:
+    &gt;&gt;&gt; k_anonymity_metric = k_anonymity(df, [&#39;Age&#39;, &#39;Gender&#39;])
+    &gt;&gt;&gt; print(repr(k_anonymity_metric))
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Extract group labels from the grouped DataFrame
+    group_labels = [group_name for group_name, _ in grouped]
+
+    # Create a GroupedMetric object with the calculated k-Anonymity values, group labels, and a name
+    return GroupedMetric(np.array(grouped.size()), group_labels, name=&#39;k-Anonymity&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_privacy.l_diversity"><code class="name flex">
+<span>def <span class="ident">l_diversity</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, sensitive_attributes: list) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the l-Diversity metric for a given DataFrame, quasi-identifiers, and sensitive attribute.</p>
+<p>Synopsis:
+l-Diversity measures the minimum number of unique values in the sensitive attribute within each group defined by
+quasi-identifiers.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and counting the unique values in the
+sensitive attribute for each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- sensitive_attributes (str): The sensitive attribute for which l-Diversity is calculated.</p>
+<p>Return:
+GroupedMetric: l-Diversity metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; l_diversity_metric = l_diversity(df, ['Age', 'Gender'], ['Disease'])
+&gt;&gt;&gt; print(repr(l_diversity_metric))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def l_diversity(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the l-Diversity metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
+
+    Synopsis:
+    l-Diversity measures the minimum number of unique values in the sensitive attribute within each group defined by 
+    quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and counting the unique values in the
+    sensitive attribute for each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (str): The sensitive attribute for which l-Diversity is calculated.
+
+    Return:
+    GroupedMetric: l-Diversity metric for each group.
+
+    Example:
+    &gt;&gt;&gt; l_diversity_metric = l_diversity(df, [&#39;Age&#39;, &#39;Gender&#39;], [&#39;Disease&#39;])
+    &gt;&gt;&gt; print(repr(l_diversity_metric))
+    &#34;&#34;&#34;
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store l-Diversity values for each group
+    unique_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Count the unique values in each sensitive attribute for the current group
+        unique_values.extend(group_df[sensitive_attributes].nunique().values)
+        group_labels.append(group_name)
+
+    # Create a GroupedMetric object with the calculated l-Diversity values, group labels, and a name
+    return GroupedMetric(np.array(unique_values), group_labels, name=&#39;l-Diversity&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_privacy.reciprocal_rank"><code class="name flex">
+<span>def <span class="ident">reciprocal_rank</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, sensitive_attributes: list) ‑> <a title="QIDLearningLib.structure.grouped_metric.GroupedMetric" href="../structure/grouped_metric.html#QIDLearningLib.structure.grouped_metric.GroupedMetric">GroupedMetric</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the Reciprocal Rank metric for a given DataFrame and quasi-identifiers.</p>
+<p>Synopse:
+Reciprocal Rank measures the quality of rankings based on the inverse of the rank position of the correct sensitive
+attribute value within each group.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers, ranking the sensitive attribute values
+in descending order within each group, and then calculating the reciprocal of the rank of the correct value.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- sensitive_attributes (list): List of column names representing sensitive attributes.</p>
+<p>Return:
+GroupedMetric: Reciprocal Rank metric for each group.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reciprocal_rank(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -&gt; GroupedMetric:
+    &#34;&#34;&#34;
+    Calculate the Reciprocal Rank metric for a given DataFrame and quasi-identifiers.
+
+    Synopse:
+    Reciprocal Rank measures the quality of rankings based on the inverse of the rank position of the correct sensitive
+    attribute value within each group.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers, ranking the sensitive attribute values
+    in descending order within each group, and then calculating the reciprocal of the rank of the correct value.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (list): List of column names representing sensitive attributes.
+
+    Return:
+    GroupedMetric: Reciprocal Rank metric for each group.
+    &#34;&#34;&#34;
+
+    # Rank the sensitive attributes in descending order within each group
+    ranks = df.groupby(quasi_identifiers)[sensitive_attributes].rank(ascending=False)
+
+    # Calculate the reciprocal ranks
+    reciprocal_ranks = 1 / ranks
+    mrr_values = reciprocal_ranks.values
+
+    group_labels = [group_name for group_name, _ in df.groupby(quasi_identifiers)]
+
+    # Create a GroupedMetric object with the calculated Reciprocal Rank values, group labels, and a name
+    return GroupedMetric(mrr_values, group_labels, name=&#39;Reciprocal Rank&#39;)</code></pre>
+</details>
+</dd>
+<dt id="QIDLearningLib.metrics.data_privacy.t_closeness"><code class="name flex">
+<span>def <span class="ident">t_closeness</span></span>(<span>df: pandas.core.frame.DataFrame, quasi_identifiers: list, sensitive_attributes: list)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the t-Closeness metric for a given DataFrame, quasi-identifiers, and sensitive attribute.</p>
+<p>Synopsis:
+t-Closeness measures the Kullback-Leibler (KL) divergence between the distribution of the sensitive attribute within
+each group defined by quasi-identifiers and the overall distribution.</p>
+<p>Details:
+The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the KL divergence for
+each group.</p>
+<p>Parameters:
+- df (pd.DataFrame): The input DataFrame.
+- quasi_identifiers (list): List of column names representing quasi-identifiers.
+- sensitive_attributes (str): The sensitive attribute for which t-Closeness is calculated.</p>
+<p>Return:
+GroupedMetric: t-Closeness metric for each group.</p>
+<p>Example:</p>
+<pre><code class="language-python-repl">&gt;&gt;&gt; t_closeness_metric = t_closeness(df, ['Age', 'Gender'], ['Income'])
+&gt;&gt;&gt; print(repr(t_closeness_metric))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes : list):
+    &#34;&#34;&#34;
+    Calculate the t-Closeness metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
+
+    Synopsis:
+    t-Closeness measures the Kullback-Leibler (KL) divergence between the distribution of the sensitive attribute within
+    each group defined by quasi-identifiers and the overall distribution.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the KL divergence for
+    each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (str): The sensitive attribute for which t-Closeness is calculated.
+
+    Return:
+    GroupedMetric: t-Closeness metric for each group.
+
+    Example:
+    &gt;&gt;&gt; t_closeness_metric = t_closeness(df, [&#39;Age&#39;, &#39;Gender&#39;], [&#39;Income&#39;])
+    &gt;&gt;&gt; print(repr(t_closeness_metric))
+    &#34;&#34;&#34;
+
+    # Calculate the overall distribution of the sensitive attribute
+    overall_distribution = df[sensitive_attributes].apply(lambda x: tuple(x), axis=1).value_counts(normalize=True)
+
+    # Group the DataFrame based on quasi_identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Initialize an empty list to store t-Closeness values for each group
+    t_closeness_values = []
+
+    group_labels = []
+
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the distribution of the sensitive attribute within the current group
+        group_distribution = group_df[sensitive_attributes].apply(lambda x: tuple(x), axis=1).value_counts(
+            normalize=True)
+
+        # Ensure that both distributions have the same index
+        common_index = overall_distribution.index.union(group_distribution.index)
+        overall_distribution = overall_distribution.reindex(common_index, fill_value=0)
+        group_distribution = group_distribution.reindex(common_index, fill_value=0)
+
+        # Calculate KL divergence using the entropy function
+        kl_divergence = scipy_entropy(group_distribution, qk=overall_distribution)
+
+        t_closeness_values.append(kl_divergence)
+
+        group_labels.append(group_name)
+
+    return GroupedMetric(np.array(t_closeness_values), group_labels, name=&#39;t-Closeness&#39;)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="QIDLearningLib.metrics" href="index.html">QIDLearningLib.metrics</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="QIDLearningLib.metrics.data_privacy.closeness_centrality" href="#QIDLearningLib.metrics.data_privacy.closeness_centrality">closeness_centrality</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_privacy.delta_presence" href="#QIDLearningLib.metrics.data_privacy.delta_presence">delta_presence</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_privacy.generalization_ratio" href="#QIDLearningLib.metrics.data_privacy.generalization_ratio">generalization_ratio</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_privacy.k_anonymity" href="#QIDLearningLib.metrics.data_privacy.k_anonymity">k_anonymity</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_privacy.l_diversity" href="#QIDLearningLib.metrics.data_privacy.l_diversity">l_diversity</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_privacy.reciprocal_rank" href="#QIDLearningLib.metrics.data_privacy.reciprocal_rank">reciprocal_rank</a></code></li>
+<li><code><a title="QIDLearningLib.metrics.data_privacy.t_closeness" href="#QIDLearningLib.metrics.data_privacy.t_closeness">t_closeness</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

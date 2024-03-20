@@ -166,3 +166,7 @@ src/QIDLearningLib/source/
 src/QIDLearningLib/make.bat
 
 src/QIDLearningLib/Makefile
+
+src/QIDLearningLib/QIDLearningLib/.idea/
+
+.idea/

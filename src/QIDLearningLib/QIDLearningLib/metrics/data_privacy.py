@@ -456,10 +456,6 @@ def generalization_ratio(df: pd.DataFrame, quasi_identifiers: list, sensitive_at
     return GroupedMetric(np.array(generalization_ratio_values), group_labels, name='Generalization Ratio')
 
 
-@lru_cache(maxsize=None)
-def compute_distribution(df_chunk, sensitive_attributes):
-    return df_chunk[sensitive_attributes].value_counts(normalize=True).sort_index()
-
 def generalization_ratio_numpy(df: pd.DataFrame, quasi_identifiers: list,
                                sensitive_attributes: list) -> GroupedMetric:
     """
@@ -540,10 +536,11 @@ def reciprocal_rank(df: pd.DataFrame, quasi_identifiers: list, sensitive_attribu
 
     # Calculate the reciprocal ranks
     reciprocal_ranks = 1 / ranks
-    mrr_values = reciprocal_ranks.values
+    mrr_values = reciprocal_ranks.values.reshape(-1)
 
     group_labels = [group_name for group_name, _ in grouped]
 
     # Create a GroupedMetric object with the calculated Reciprocal Rank values, group labels, and a name
     return GroupedMetric(mrr_values, group_labels, name='Reciprocal Rank')
+
 

@@ -36,7 +36,8 @@ def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attributes):
         #(closeness_centrality, closeness_centrality_numpy, quasi_identifiers, sensitive_attributes),
         #(delta_presence, delta_presence_numpy, ['Age'], [22, ])
         #(t_closeness, t_closeness_numpy, quasi_identifiers, sensitive_attributes),
-        (generalization_ratio, generalization_ratio_numpy, quasi_identifiers, sensitive_attributes),
+        #(generalization_ratio, generalization_ratio_numpy, quasi_identifiers, sensitive_attributes),
+        #(reciprocal_rank, reciprocal_rank, quasi_identifiers, sensitive_attributes),
 
     ]
 
@@ -51,7 +52,7 @@ def main():
 
     # Example usage
     quasi_identifiers = ['Age', 'Gender', 'Country', 'Education']
-    sensitive_attribute = 'Disease'
+    sensitive_attribute = ['Disease']
 
     # Analyze privacy metrics
     analyze_privacy_metrics(df, quasi_identifiers, sensitive_attribute)

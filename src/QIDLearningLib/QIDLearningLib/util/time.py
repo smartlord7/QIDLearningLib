@@ -48,16 +48,18 @@ def compare_results(original_metric, numpy_metric):
     else:
         return False
 
+
 # Function to run tests
-def run_tests(test_cases, df, quasi_identifiers):
+def run_tests(test_cases, df):
     for data in test_cases:
         original_func = data[0]
         new_func = data[1]
+        quasi_identifiers = data[2]
 
         sensitive_attributes = None
 
-        if len(data) == 3:
-            sensitive_attributes = data[2]
+        if len(data) == 4:
+            sensitive_attributes = data[3]
 
         # Measure performance
         original_mean, original_std = measure_time(original_func, df, quasi_identifiers, sensitive_attributes)
@@ -71,6 +73,9 @@ def run_tests(test_cases, df, quasi_identifiers):
         else:
             original_metric = original_func(df, quasi_identifiers)
             new_metric = new_func(df, quasi_identifiers)
+
+        original_metric.plot_all()
+        new_metric.plot_all()
 
         # Compare results
         results_match = compare_results(original_metric, new_metric)

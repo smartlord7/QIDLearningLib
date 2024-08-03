@@ -273,6 +273,47 @@ def delta_presence(df: pd.DataFrame, quasi_identifiers: list, values: list) -> G
     return GroupedMetric(np.array(delta_presence_values), group_labels, name='Delta Presence')
 
 
+def delta_presence_numpy(df: pd.DataFrame, quasi_identifiers: list, values: list) -> GroupedMetric:
+    """
+    Calculate the Delta Presence metric for a given DataFrame, quasi-identifier, and value.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): The quasi-identifier columns for which Delta Presence is calculated.
+    - values (list): The value for which Delta Presence is calculated.
+
+    Return:
+    GroupedMetric: Delta Presence metric for each group.
+    """
+
+    # Convert the quasi_identifiers and values to a tuple for consistency
+    quasi_identifiers = quasi_identifiers
+    values = tuple(values)
+
+    # Create a tuple version of the quasi_identifiers for comparison
+    df_tuples = df[quasi_identifiers].apply(tuple, axis=1)
+
+    # Calculate overall presence of the values in the quasi_identifiers
+    total_count = len(df)
+    overall_presence = np.mean(df_tuples == values)
+
+    # Group the DataFrame by the quasi_identifiers
+    grouped = df.groupby(list(quasi_identifiers))
+
+    # Calculate group-wise presence
+    group_presences = grouped.apply(lambda group: np.mean(df_tuples[group.index] == values))
+
+    # Calculate Delta Presence for each group
+    delta_presences = np.abs(overall_presence - group_presences)
+
+    # Extract group labels
+    group_labels = [str(label) for label in group_presences.index]
+
+    # Create a GroupedMetric object with the calculated Delta Presence values, group labels, and a name
+    return GroupedMetric(np.array(delta_presences), group_labels, name='Delta Presence')
+
+
+
 def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes : list):
     """
     Calculate the t-Closeness metric for a given DataFrame, quasi-identifiers, and sensitive attribute.

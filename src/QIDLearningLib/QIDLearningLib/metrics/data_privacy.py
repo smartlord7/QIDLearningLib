@@ -29,7 +29,6 @@ from typing import Iterable, Any
 from scipy.special import kl_div
 from scipy.stats import wasserstein_distance
 from typing_extensions import deprecated
-
 from structure.grouped_metric import GroupedMetric
 
 
@@ -255,32 +254,40 @@ def t_closeness(df: pd.DataFrame, quasi_identifiers: Iterable[str],
     >>> print(repr(t_closeness_metric))
     """
 
-    # Get overall distribution of the sensitive attribute
-    overall_counts = df[sensitive_attributes].apply(lambda x: tuple(x)).value_counts(normalize=True)
-    overall_index = overall_counts.index
-    overall_distribution = overall_counts.reindex(overall_index, fill_value=0).values
+    # Compute the overall distribution of the sensitive attribute
+    sensitive_data = df[sensitive_attributes].values
+    unique_vals, overall_counts = np.unique(sensitive_data, return_counts=True)
+    overall_distribution = overall_counts / overall_counts.sum()
 
+    # Group the DataFrame based on quasi_identifiers
     grouped = df.groupby(quasi_identifiers)
 
-    # Create a DataFrame with quasi-identifiers as index and sensitive attributes as columns
-    df_grouped = grouped.apply(
-        lambda g: g[sensitive_attributes].apply(lambda x: tuple(x)).value_counts(normalize=True)
-    ).unstack(fill_value=0)
+    # Initialize lists to store t-Closeness values and group labels
+    t_closeness_values = []
+    group_labels = []
 
-    # Reindex to ensure all sensitive attribute tuples are present in all groups
-    df_grouped = df_grouped.reindex(columns=overall_index, fill_value=0).fillna(0)
+    # Iterate over each group in the grouped DataFrame
+    for group_name, group_df in grouped:
+        # Calculate the distribution of the sensitive attribute within the current group
+        group_sensitive_data = group_df[sensitive_attributes].values
+        unique_vals_group, group_counts = np.unique(group_sensitive_data, return_counts=True)
+        group_distribution = group_counts / group_counts.sum()
 
-    # Convert to numpy arrays for efficient computation
-    group_distributions = df_grouped.to_numpy()
-    overall_distribution = np.expand_dims(overall_distribution, axis=0)  # Make it 2D for broadcasting
+        # Ensure that both distributions have the same index
+        all_vals = np.unique(np.concatenate((unique_vals, unique_vals_group)))
+        overall_distribution_full = np.array(
+            [overall_distribution[np.where(unique_vals == val)[0][0]] if val in unique_vals else 0 for val in all_vals])
+        group_distribution_full = np.array(
+            [group_distribution[np.where(unique_vals_group == val)[0][0]] if val in unique_vals_group else 0 for val in
+             all_vals])
 
-    # Calculate KL divergence for each group
-    kl_divergences = np.sum(kl_div(group_distributions, overall_distribution), axis=1)
+        # Calculate KL divergence using scipy's kl_div
+        kl_divergence = np.sum(kl_div(group_distribution_full, overall_distribution_full))
 
-    # Get group labels
-    group_labels = [group_name for group_name, _ in grouped]
+        t_closeness_values.append(kl_divergence)
+        group_labels.append(group_name)
 
-    return GroupedMetric(np.array(kl_divergences), group_labels, name='t-Closeness')
+    return GroupedMetric(np.array(t_closeness_values), group_labels, name='t-Closeness')
 
 
 def generalization_ratio(df: pd.DataFrame, quasi_identifiers: Iterable[str],

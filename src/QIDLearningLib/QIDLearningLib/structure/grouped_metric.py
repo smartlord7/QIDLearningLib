@@ -146,6 +146,8 @@ class GroupedMetric:
         plt.step(values_sorted, ecdf, label='Empirical ECDF')
 
         # Plot normal distribution's CDF
+        self.mean = np.mean(self.values)
+        self.std = np.std(self.values)
         normal_cdf = norm.cdf(values_sorted, loc=self.mean, scale=self.std)
         plt.plot(values_sorted, normal_cdf, label='Normal CDF', linestyle='--')
 

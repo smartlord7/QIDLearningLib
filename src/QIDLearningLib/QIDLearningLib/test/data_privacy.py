@@ -25,7 +25,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 from metrics.data_privacy import *
 from util.data import generate_synthetic_dataset
-from util.time import measure_time, run_tests
+from util.time import run_tests
 
 
 
@@ -42,7 +42,7 @@ def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attributes):
     ]
 
     # Run the tests
-    run_tests(test_cases, df)
+    run_tests(test_cases, df, 3)
 
 
 

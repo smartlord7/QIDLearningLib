@@ -26,9 +26,10 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 import time
 import numpy as np
+import pandas as pd
 
 
-def measure_time(func, df, quasi_identifiers, sensitive_attributes, num_runs=30):
+def measure_time(func, df, quasi_identifiers, sensitive_attributes, num_runs=50):
     times = []
     for i in range(num_runs):
         print(f"Run {i + 1}/{num_runs}")
@@ -58,24 +59,27 @@ def compare_results(original_metric, new_metric):
     return num_differences, diff_sum
 
 
-# Function to run tests
-def run_tests(test_cases, df):
+def run_tests(test_cases, df, num_runs):
+    # List to store comparison results
+    comparisons = []
+
+    # Extract DataFrame size
+    df_size = len(df)
+
+    # Filename with parameters
+    filename = f'test_results_num_runs_{num_runs}_df_size_{df_size}.csv'
+
     for data in test_cases:
         original_func = data[0]
         new_func = data[1]
         quasi_identifiers = data[2]
-
-        sensitive_attributes = None
-
-        if len(data) == 4:
-            sensitive_attributes = data[3]
+        sensitive_attributes = data[3] if len(data) == 4 else None
 
         # Measure performance
-        original_mean, original_std = measure_time(original_func, df, quasi_identifiers, sensitive_attributes)
-        new_mean, new_std = measure_time(new_func, df, quasi_identifiers, sensitive_attributes)
+        original_mean, original_std = measure_time(original_func, df, quasi_identifiers, sensitive_attributes, num_runs)
+        new_mean, new_std = measure_time(new_func, df, quasi_identifiers, sensitive_attributes, num_runs)
 
         # Get results
-
         if sensitive_attributes:
             original_metric = original_func(df, quasi_identifiers, sensitive_attributes)
             new_metric = new_func(df, quasi_identifiers, sensitive_attributes)
@@ -83,11 +87,21 @@ def run_tests(test_cases, df):
             original_metric = original_func(df, quasi_identifiers)
             new_metric = new_func(df, quasi_identifiers)
 
-        #original_metric.plot_all()
-        #new_metric.plot_all()
-
         # Compare results
         results_diff, results_diff_sum = compare_results(original_metric, new_metric)
+
+        # Store comparison results
+        comparisons.append({
+            'Original Function': original_func.__name__,
+            'New Function': new_func.__name__,
+            'Original Mean Time': original_mean,
+            'Original Std Dev Time': original_std,
+            'New Mean Time': new_mean,
+            'New Std Dev Time': new_std,
+            'Speedup': original_mean / new_mean,
+            'Number of Differences': results_diff,
+            'Sum of Differences': results_diff_sum
+        })
 
         # Print performance results
         print(f"{original_func.__name__} vs {new_func.__name__}")
@@ -96,3 +110,9 @@ def run_tests(test_cases, df):
         print(f"Speedup: {original_mean / new_mean:.2f}x")
         print(f"Results differences|sum of diff: {results_diff}|{results_diff_sum}")
         print("-" * 40)
+
+    # Save results to CSV
+    df_comparisons = pd.DataFrame(comparisons)
+    df_comparisons.to_csv(filename, index=False)
+
+    print(f"Results saved to {filename}")

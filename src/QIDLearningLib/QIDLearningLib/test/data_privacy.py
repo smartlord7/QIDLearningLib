@@ -32,12 +32,12 @@ from util.time import measure_time, run_tests
 
 def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attributes):
     test_cases = [
-        #(k_anonymity, k_anonymity_numpy, quasi_identifiers),
-        #(closeness_centrality, closeness_centrality_numpy, quasi_identifiers, sensitive_attributes),
-        #(delta_presence, delta_presence_numpy, ['Age'], [22, ])
-        #(t_closeness, t_closeness_numpy, quasi_identifiers, sensitive_attributes),
-        #(generalization_ratio, generalization_ratio_numpy, quasi_identifiers, sensitive_attributes),
-        #(reciprocal_rank, reciprocal_rank, quasi_identifiers, sensitive_attributes),
+        (k_anonymity_old, k_anonymity, quasi_identifiers),
+        (closeness_centrality_old, closeness_centrality, quasi_identifiers, sensitive_attributes),
+        (delta_presence_old, delta_presence, ['Age'], [22, ]),
+        (t_closeness_old, t_closeness, quasi_identifiers, sensitive_attributes),
+        (generalization_ratio_old, generalization_ratio, quasi_identifiers, sensitive_attributes),
+        (reciprocal_rank, reciprocal_rank, quasi_identifiers, sensitive_attributes),
 
     ]
 

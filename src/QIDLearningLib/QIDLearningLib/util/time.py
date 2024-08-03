@@ -42,19 +42,20 @@ def measure_time(func, df, quasi_identifiers, sensitive_attributes, num_runs=30)
     return np.mean(times), np.std(times)
 
 
-def compare_results(original_metric, numpy_metric):
+def compare_results(original_metric, new_metric):
     # Ensure both metrics are numpy arrays for comparison
     original_values = np.array(original_metric.values)
-    numpy_values = np.array(numpy_metric.values)
+    new_values = np.array(new_metric.values)
 
     # Check if both arrays have the same shape
-    if original_values.shape != numpy_values.shape:
+    if original_values.shape != new_values.shape:
         raise ValueError("The shapes of the two metrics do not match.")
 
     # Calculate the number of differences
-    num_differences = np.sum(original_values != numpy_values)
+    num_differences = np.sum(original_values != new_values)
+    diff_sum = np.sum(original_values - new_values)
 
-    return num_differences
+    return num_differences, diff_sum
 
 
 # Function to run tests
@@ -82,16 +83,16 @@ def run_tests(test_cases, df):
             original_metric = original_func(df, quasi_identifiers)
             new_metric = new_func(df, quasi_identifiers)
 
-        original_metric.plot_all()
-        new_metric.plot_all()
+        #original_metric.plot_all()
+        #new_metric.plot_all()
 
         # Compare results
-        results_match = compare_results(original_metric, new_metric)
+        results_diff, results_diff_sum = compare_results(original_metric, new_metric)
 
         # Print performance results
         print(f"{original_func.__name__} vs {new_func.__name__}")
         print(f"Original function duration: {original_mean:.6f} seconds (±{original_std:.6f})")
         print(f"New function duration: {new_mean:.6f} seconds (±{new_std:.6f})")
         print(f"Speedup: {original_mean / new_mean:.2f}x")
-        print(f"Results differences: {results_match}")
+        print(f"Results differences|sum of diff: {results_diff}|{results_diff_sum}")
         print("-" * 40)

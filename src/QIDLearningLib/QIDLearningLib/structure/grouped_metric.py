@@ -30,7 +30,7 @@ from typing import Union
 
 
 class GroupedMetric:
-    def __init__(self, values: Union[list, np.ndarray], group_labels: Union[list, np.ndarray], name: str = None):
+    def __init__(self, values: Union[list, np.ndarray], group_labels: Union[list, np.ndarray], name: str = None, lazy_calc: bool = True):
         """
         Create an instance of the GroupedMetric class.
 
@@ -41,6 +41,7 @@ class GroupedMetric:
         - values (Union[list, np.ndarray]): The values of the metric.
         - group_labels (Union[list, np.ndarray]): Labels for different groups.
         - name (str): The name of the metric.
+        - lazy_calc (bool): Specifies if the statistics should be calculated lazily.
 
         Return:
         None
@@ -54,6 +55,14 @@ class GroupedMetric:
         self.values = np.array(values)
         self.group_labels = np.array(group_labels)
         self.name = name
+        self.lazy_calc = lazy_calc
+
+        if not self.lazy_calc:
+            self.calc_all()
+
+        self.histogram = None  # Will be populated when plot_histogram is called
+
+    def calc_all(self):
         self.mean = np.mean(self.values)
         self.std = np.std(self.values)
         self.var = np.var(self.values)
@@ -63,8 +72,7 @@ class GroupedMetric:
         self.kurtosis = kurtosis(self.values)
         self.median = np.median(self.values)
         self.mode = mode(self.values).mode
-        self.mode_count =  mode(self.values).count
-        self.histogram = None  # Will be populated when plot_histogram is called
+        self.mode_count = mode(self.values).count
 
     def plot_histogram(self) -> None:
         """

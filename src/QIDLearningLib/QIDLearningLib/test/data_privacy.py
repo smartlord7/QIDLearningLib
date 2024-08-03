@@ -23,40 +23,32 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
 
-from QIDLearningLib.metrics.data_privacy import *
-from QIDLearningLib.util.data import generate_synthetic_dataset
+from metrics.data_privacy import *
+from util.data import generate_synthetic_dataset
+from util.time import measure_time
 
 
 def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attribute):
+    # Measure performance
+    original_mean, original_std = measure_time(k_anonymity, df, quasi_identifiers)
+    numpy_mean, numpy_std = measure_time(k_anonymity_numpy, df, quasi_identifiers)
+
+    # Print results
+    print(f"Original function duration: {original_mean:.6f} seconds (±{original_std:.6f})")
+    print(f"NumPy-based function duration: {numpy_mean:.6f} seconds (±{numpy_std:.6f})")
+    print(f"Speedup: {original_mean / numpy_mean:.2f}x")
+
+    # Print k-Anonymity results
     print("k-Anonymity:")
     k_anonymity_metric = k_anonymity(df, quasi_identifiers)
     print(repr(k_anonymity_metric))
     k_anonymity_metric.plot_all()
 
-    print("\nl-Diversity:")
-    l_diversity_metric = l_diversity(df, quasi_identifiers, [sensitive_attribute, ])
-    print(repr(l_diversity_metric))
-    l_diversity_metric.plot_all()
+    print("k-Anonymity numpy:")
+    k_anonymity_metric = k_anonymity_numpy(df, quasi_identifiers)
+    print(repr(k_anonymity_metric))
+    k_anonymity_metric.plot_all()
 
-    print("\nCloseness Centrality:")
-    closeness_centrality_metric = closeness_centrality(df, quasi_identifiers, [sensitive_attribute, ])
-    print(repr(closeness_centrality_metric))
-    closeness_centrality_metric.plot_all()
-
-    print("\nt-Closeness:")
-    t_closeness_metric = t_closeness(df, quasi_identifiers, [sensitive_attribute, ])
-    print(repr(t_closeness_metric))
-    t_closeness_metric.plot_all()
-
-    print("\nDelta Presence:")
-    delta_presence_metric = delta_presence(df, ['Age', ], [22, ])
-    print(repr(delta_presence_metric))
-    delta_presence_metric.plot_all()
-
-    print("\nGeneralization Ratio:")
-    generalization_ratio_metric = generalization_ratio(df, quasi_identifiers, [sensitive_attribute, ])
-    print(repr(generalization_ratio_metric))
-    generalization_ratio_metric.plot_all()
 
 
 def main():

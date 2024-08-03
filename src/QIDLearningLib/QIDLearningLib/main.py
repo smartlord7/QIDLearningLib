@@ -8,11 +8,11 @@ import test.performance as pt
 
 def main():
     matplotlib.use('TkAgg')
-    qt.main()
-    ct.main()
     dpt.main()
-    dut.main()
-    pt.main()
+    #qt.main()
+    #ct.main()
+    #dut.main()
+    #pt.main()
 
 
 if __name__ == "__main__":

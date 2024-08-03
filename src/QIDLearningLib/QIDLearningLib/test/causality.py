@@ -27,8 +27,8 @@ import matplotlib.pyplot as plt
 from pandas import DataFrame
 from typing import List
 
-from QIDLearningLib.metrics.causality import balance_test, covariate_shift, propensity_score_overlap
-from QIDLearningLib.util.data import generate_synthetic_dataset
+from metrics.causality import balance_test, covariate_shift, propensity_score_overlap
+from util.data import generate_synthetic_dataset
 
 
 def analyze_causality_metrics(

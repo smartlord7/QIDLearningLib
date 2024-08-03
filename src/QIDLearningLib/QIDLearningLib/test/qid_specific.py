@@ -24,8 +24,8 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 """
 
 import pandas as pd  # Make sure to import pandas if not already done
-from QIDLearningLib.metrics.qid_specific import separation, distinction
-from QIDLearningLib.util.data import generate_synthetic_dataset
+from metrics.qid_specific import separation, distinction
+from util.data import generate_synthetic_dataset
 
 
 def test_qid_metrics(df: pd.DataFrame, attributes: list) -> None:

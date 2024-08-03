@@ -64,6 +64,12 @@ def k_anonymity(df, quasi_identifiers):
     return GroupedMetric(np.array(grouped.size()), group_labels, name='k-Anonymity')
 
 
+def k_anonymity_numpy(df, quasi_identifiers):
+    structured_array = df[quasi_identifiers].astype(str).to_records(index=False)
+    unique_groups, counts = np.unique(structured_array, return_counts=True)
+    return GroupedMetric(counts, unique_groups.tolist(), name='k-Anonymity')
+
+
 def l_diversity(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -> GroupedMetric:
     """
     Calculate the l-Diversity metric for a given DataFrame, quasi-identifiers, and sensitive attribute.

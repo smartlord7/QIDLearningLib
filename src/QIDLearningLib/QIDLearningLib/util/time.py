@@ -43,10 +43,18 @@ def measure_time(func, df, quasi_identifiers, sensitive_attributes, num_runs=30)
 
 
 def compare_results(original_metric, numpy_metric):
-    if np.array_equal(original_metric.values, numpy_metric.values):
-        return True
-    else:
-        return False
+    # Ensure both metrics are numpy arrays for comparison
+    original_values = np.array(original_metric.values)
+    numpy_values = np.array(numpy_metric.values)
+
+    # Check if both arrays have the same shape
+    if original_values.shape != numpy_values.shape:
+        raise ValueError("The shapes of the two metrics do not match.")
+
+    # Calculate the number of differences
+    num_differences = np.sum(original_values != numpy_values)
+
+    return num_differences
 
 
 # Function to run tests
@@ -85,5 +93,5 @@ def run_tests(test_cases, df):
         print(f"Original function duration: {original_mean:.6f} seconds (±{original_std:.6f})")
         print(f"New function duration: {new_mean:.6f} seconds (±{new_std:.6f})")
         print(f"Speedup: {original_mean / new_mean:.2f}x")
-        print(f"Results match: {results_match}")
+        print(f"Results differences: {results_match}")
         print("-" * 40)

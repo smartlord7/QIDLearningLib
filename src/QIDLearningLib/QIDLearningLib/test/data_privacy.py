@@ -34,7 +34,9 @@ def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attributes):
     test_cases = [
         #(k_anonymity, k_anonymity_numpy, quasi_identifiers),
         #(closeness_centrality, closeness_centrality_numpy, quasi_identifiers, sensitive_attributes),
-        (delta_presence, delta_presence_numpy, ['Age'], [22, ])
+        #(delta_presence, delta_presence_numpy, ['Age'], [22, ])
+        (t_closeness, t_closeness_numpy, quasi_identifiers, sensitive_attributes),
+
     ]
 
     # Run the tests

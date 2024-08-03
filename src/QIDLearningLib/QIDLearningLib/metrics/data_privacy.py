@@ -25,6 +25,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 import numpy as np
 import pandas as pd
+from scipy.special import kl_div
 from scipy.stats import wasserstein_distance
 from scipy.stats import entropy as scipy_entropy
 
@@ -313,7 +314,6 @@ def delta_presence_numpy(df: pd.DataFrame, quasi_identifiers: list, values: list
     return GroupedMetric(np.array(delta_presences), group_labels, name='Delta Presence')
 
 
-
 def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes : list):
     """
     Calculate the t-Closeness metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
@@ -340,7 +340,7 @@ def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes 
     """
 
     # Calculate the overall distribution of the sensitive attribute
-    overall_distribution = df[sensitive_attributes].apply(lambda x: tuple(x), axis=1).value_counts(normalize=True)
+    overall_distribution = df[sensitive_attributes].apply(lambda x: tuple(x)).value_counts(normalize=True)
 
     # Group the DataFrame based on quasi_identifiers
     grouped = df.groupby(quasi_identifiers)
@@ -353,7 +353,7 @@ def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes 
     # Iterate over each group in the grouped DataFrame
     for group_name, group_df in grouped:
         # Calculate the distribution of the sensitive attribute within the current group
-        group_distribution = group_df[sensitive_attributes].apply(lambda x: tuple(x), axis=1).value_counts(
+        group_distribution = group_df[sensitive_attributes].apply(lambda x: tuple(x)).value_counts(
             normalize=True)
 
         # Ensure that both distributions have the same index
@@ -369,6 +369,45 @@ def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes 
         group_labels.append(group_name)
 
     return GroupedMetric(np.array(t_closeness_values), group_labels, name='t-Closeness')
+
+
+def t_closeness_numpy(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list):
+    """
+    Calculate the t-Closeness metric for a given DataFrame, quasi-identifiers, and sensitive attribute.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (str): The sensitive attribute for which t-Closeness is calculated.
+
+    Return:
+    GroupedMetric: t-Closeness metric for each group.
+    """
+
+    # Get overall distribution of the sensitive attribute
+    overall_counts = df[sensitive_attributes].apply(lambda x: tuple(x)).value_counts(normalize=True)
+    overall_index = overall_counts.index
+    overall_distribution = overall_counts.reindex(overall_index, fill_value=0).values
+
+    # Create a DataFrame with quasi-identifiers as index and sensitive attributes as columns
+    df_grouped = df.groupby(quasi_identifiers).apply(
+        lambda g: g[sensitive_attributes].apply(lambda x: tuple(x)).value_counts(normalize=True)
+    ).unstack(fill_value=0)
+
+    # Reindex to ensure all sensitive attribute tuples are present in all groups
+    df_grouped = df_grouped.reindex(columns=overall_index, fill_value=0).fillna(0)
+
+    # Convert to numpy arrays for efficient computation
+    group_distributions = df_grouped.to_numpy()
+    overall_distribution = np.expand_dims(overall_distribution, axis=0)  # Make it 2D for broadcasting
+
+    # Calculate KL divergence for each group
+    kl_divergences = np.sum(kl_div(group_distributions, overall_distribution), axis=1)
+
+    # Get group labels
+    group_labels = df_grouped.index.to_list()
+
+    return GroupedMetric(np.array(kl_divergences), group_labels, name='t-Closeness')
 
 
 def generalization_ratio(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -> GroupedMetric:

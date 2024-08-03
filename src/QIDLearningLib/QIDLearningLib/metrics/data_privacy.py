@@ -22,6 +22,7 @@ This open-source software is released under the terms of the GNU General Public 
 For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
+from functools import lru_cache
 
 import numpy as np
 import pandas as pd
@@ -102,13 +103,13 @@ def l_diversity(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes:
     # Initialize an empty list to store l-Diversity values for each group
     unique_values = []
 
-    group_labels = []
+    # Get group labels
+    group_labels = [group_name for group_name, _ in grouped]
 
     # Iterate over each group in the grouped DataFrame
     for group_name, group_df in grouped:
         # Count the unique values in each sensitive attribute for the current group
         unique_values.extend(group_df[sensitive_attributes].nunique().values)
-        group_labels.append(group_name)
 
     # Create a GroupedMetric object with the calculated l-Diversity values, group labels, and a name
     return GroupedMetric(np.array(unique_values), group_labels, name='l-Diversity')
@@ -148,7 +149,8 @@ def closeness_centrality(df: pd.DataFrame, quasi_identifiers: list, sensitive_at
     # Initialize an empty list to store Closeness Centrality values for each group
     closeness_values = []
 
-    group_labels = []
+    # Get group labels
+    group_labels = [group_name for group_name, _ in grouped]
 
     # Iterate over each group in the grouped DataFrame
     for group_name, group_df in grouped:
@@ -169,7 +171,6 @@ def closeness_centrality(df: pd.DataFrame, quasi_identifiers: list, sensitive_at
                                              overall_distribution.values, group_distribution.values)
 
         closeness_values.append(closeness)
-        group_labels.append(group_name)
 
     # Create a GroupedMetric object with the calculated Closeness Centrality values, group labels, and a name
     return GroupedMetric(np.array(closeness_values), group_labels, name='Closeness Centrality')
@@ -194,8 +195,8 @@ def closeness_centrality_numpy(df, quasi_identifiers, sensitive_attributes: list
     # Group the DataFrame based on quasi-identifiers
     grouped = df.groupby(quasi_identifiers)
 
-    # Precompute the list of all group labels
-    group_labels = []
+    # Get group labels
+    group_labels = [group_name for group_name, _ in grouped]
 
     # List to hold all closeness values
     closeness_values = []
@@ -219,7 +220,6 @@ def closeness_centrality_numpy(df, quasi_identifiers, sensitive_attributes: list
 
         # Append results
         closeness_values.append(closeness)
-        group_labels.append(group_name)
 
     return GroupedMetric(np.array(closeness_values), group_labels, name='Closeness Centrality')
 
@@ -258,7 +258,8 @@ def delta_presence(df: pd.DataFrame, quasi_identifiers: list, values: list) -> G
     # Initialize an empty list to store Delta Presence values for each group
     delta_presence_values = []
 
-    group_labels = []
+    # Get group labels
+    group_labels = [group_name for group_name, _ in grouped]
 
     # Iterate over each group in the grouped DataFrame
     for group_name, group_df in grouped:
@@ -268,7 +269,6 @@ def delta_presence(df: pd.DataFrame, quasi_identifiers: list, values: list) -> G
         # Calculate Delta Presence for the current group
         delta_presence = abs(overall_presence - group_presence)
         delta_presence_values.append(delta_presence)
-        group_labels.append(group_name)
 
     # Create a GroupedMetric object with the calculated Delta Presence values, group labels, and a name
     return GroupedMetric(np.array(delta_presence_values), group_labels, name='Delta Presence')
@@ -295,7 +295,6 @@ def delta_presence_numpy(df: pd.DataFrame, quasi_identifiers: list, values: list
     df_tuples = df[quasi_identifiers].apply(tuple, axis=1)
 
     # Calculate overall presence of the values in the quasi_identifiers
-    total_count = len(df)
     overall_presence = np.mean(df_tuples == values)
 
     # Group the DataFrame by the quasi_identifiers
@@ -307,8 +306,8 @@ def delta_presence_numpy(df: pd.DataFrame, quasi_identifiers: list, values: list
     # Calculate Delta Presence for each group
     delta_presences = np.abs(overall_presence - group_presences)
 
-    # Extract group labels
-    group_labels = [str(label) for label in group_presences.index]
+    # Get group labels
+    group_labels = [group_name for group_name, _ in grouped]
 
     # Create a GroupedMetric object with the calculated Delta Presence values, group labels, and a name
     return GroupedMetric(np.array(delta_presences), group_labels, name='Delta Presence')
@@ -348,7 +347,6 @@ def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes 
     # Initialize an empty list to store t-Closeness values for each group
     t_closeness_values = []
 
-    group_labels = []
 
     # Iterate over each group in the grouped DataFrame
     for group_name, group_df in grouped:
@@ -366,7 +364,8 @@ def t_closeness(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes 
 
         t_closeness_values.append(kl_divergence)
 
-        group_labels.append(group_name)
+    # Get group labels
+    group_labels = [group_name for group_name, _ in grouped]
 
     return GroupedMetric(np.array(t_closeness_values), group_labels, name='t-Closeness')
 
@@ -389,8 +388,11 @@ def t_closeness_numpy(df: pd.DataFrame, quasi_identifiers: list, sensitive_attri
     overall_index = overall_counts.index
     overall_distribution = overall_counts.reindex(overall_index, fill_value=0).values
 
+
+    grouped = df.groupby(quasi_identifiers)
+
     # Create a DataFrame with quasi-identifiers as index and sensitive attributes as columns
-    df_grouped = df.groupby(quasi_identifiers).apply(
+    df_grouped = grouped.apply(
         lambda g: g[sensitive_attributes].apply(lambda x: tuple(x)).value_counts(normalize=True)
     ).unstack(fill_value=0)
 
@@ -405,7 +407,7 @@ def t_closeness_numpy(df: pd.DataFrame, quasi_identifiers: list, sensitive_attri
     kl_divergences = np.sum(kl_div(group_distributions, overall_distribution), axis=1)
 
     # Get group labels
-    group_labels = df_grouped.index.to_list()
+    group_labels = [group_name for group_name, _ in grouped]
 
     return GroupedMetric(np.array(kl_divergences), group_labels, name='t-Closeness')
 
@@ -440,7 +442,7 @@ def generalization_ratio(df: pd.DataFrame, quasi_identifiers: list, sensitive_at
     # Initialize an empty list to store Generalization Ratio values for each group
     generalization_ratio_values = []
 
-    group_labels = []
+    group_labels = [group_name for group_name, _ in grouped]
 
     # Iterate over each group in the grouped DataFrame
     for group_name, group_df in grouped:
@@ -450,10 +452,63 @@ def generalization_ratio(df: pd.DataFrame, quasi_identifiers: list, sensitive_at
         # Calculate the absolute differences and sum them up
         generalization_ratio_values.append(np.sum(np.abs(overall_distribution - group_distribution)))
 
-        group_labels.append(group_name)
-
     # Create a GroupedMetric object with the calculated Generalization Ratio values, group labels, and a name
     return GroupedMetric(np.array(generalization_ratio_values), group_labels, name='Generalization Ratio')
+
+
+@lru_cache(maxsize=None)
+def compute_distribution(df_chunk, sensitive_attributes):
+    return df_chunk[sensitive_attributes].value_counts(normalize=True).sort_index()
+
+def generalization_ratio_numpy(df: pd.DataFrame, quasi_identifiers: list,
+                               sensitive_attributes: list) -> GroupedMetric:
+    """
+    Calculate the Generalization Ratio metric for a given DataFrame and quasi-identifiers.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - sensitive_attributes (list): List of column names representing sensitive attributes.
+
+    Returns:
+    GroupedMetric: Generalization Ratio metric for each group.
+    """
+
+    # Calculate the overall distribution of sensitive attributes
+    overall_distribution = df[sensitive_attributes].value_counts(normalize=True).sort_index()
+
+    # Prepare for grouping
+    grouped = df.groupby(quasi_identifiers)
+
+    # Prepare a DataFrame to store distributions for all groups
+    distributions = []
+
+    # Create a dictionary to map group names to their distributions
+    group_dict = {}
+
+    for group_name, group_df in grouped:
+        group_distribution = group_df[sensitive_attributes].value_counts(normalize=True).sort_index()
+        group_dict[group_name] = group_distribution
+
+    # Align distributions with the overall distribution
+    index = overall_distribution.index
+    aligned_distributions = {}
+
+    for group_name, group_distribution in group_dict.items():
+        aligned_group_distribution = group_distribution.reindex(index, fill_value=0)
+        aligned_distributions[group_name] = aligned_group_distribution
+
+    # Convert the distributions to a DataFrame
+    distributions_df = pd.DataFrame(aligned_distributions).T.fillna(0).reindex(columns=index, fill_value=0)
+
+    # Calculate the absolute differences and sum them up
+    overall_distribution_array = overall_distribution.values
+    diffs = np.abs(distributions_df.values - overall_distribution_array).sum(axis=1)
+
+    # Prepare results for GroupedMetric
+    group_labels = [group_name for group_name, _ in grouped]
+
+    return GroupedMetric(np.array(diffs), group_labels, name='Generalization Ratio')
 
 
 def reciprocal_rank(df: pd.DataFrame, quasi_identifiers: list, sensitive_attributes: list) -> GroupedMetric:
@@ -477,14 +532,17 @@ def reciprocal_rank(df: pd.DataFrame, quasi_identifiers: list, sensitive_attribu
     GroupedMetric: Reciprocal Rank metric for each group.
     """
 
+
+    grouped = df.groupby(quasi_identifiers)
+
     # Rank the sensitive attributes in descending order within each group
-    ranks = df.groupby(quasi_identifiers)[sensitive_attributes].rank(ascending=False)
+    ranks = grouped[sensitive_attributes].rank(ascending=False)
 
     # Calculate the reciprocal ranks
     reciprocal_ranks = 1 / ranks
     mrr_values = reciprocal_ranks.values
 
-    group_labels = [group_name for group_name, _ in df.groupby(quasi_identifiers)]
+    group_labels = [group_name for group_name, _ in grouped]
 
     # Create a GroupedMetric object with the calculated Reciprocal Rank values, group labels, and a name
     return GroupedMetric(mrr_values, group_labels, name='Reciprocal Rank')

@@ -25,29 +25,19 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 from metrics.data_privacy import *
 from util.data import generate_synthetic_dataset
-from util.time import measure_time
+from util.time import measure_time, run_tests
 
 
-def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attribute):
-    # Measure performance
-    original_mean, original_std = measure_time(k_anonymity, df, quasi_identifiers)
-    numpy_mean, numpy_std = measure_time(k_anonymity_numpy, df, quasi_identifiers)
 
-    # Print results
-    print(f"Original function duration: {original_mean:.6f} seconds (±{original_std:.6f})")
-    print(f"NumPy-based function duration: {numpy_mean:.6f} seconds (±{numpy_std:.6f})")
-    print(f"Speedup: {original_mean / numpy_mean:.2f}x")
 
-    # Print k-Anonymity results
-    print("k-Anonymity:")
-    k_anonymity_metric = k_anonymity(df, quasi_identifiers)
-    print(repr(k_anonymity_metric))
-    k_anonymity_metric.plot_all()
+def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attributes):
+    test_cases = [
+        (k_anonymity, k_anonymity_numpy),
+        (closeness_centrality, closeness_centrality_numpy, sensitive_attributes)
+    ]
 
-    print("k-Anonymity numpy:")
-    k_anonymity_metric = k_anonymity_numpy(df, quasi_identifiers)
-    print(repr(k_anonymity_metric))
-    k_anonymity_metric.plot_all()
+    # Run the tests
+    run_tests(test_cases, df, quasi_identifiers)
 
 
 

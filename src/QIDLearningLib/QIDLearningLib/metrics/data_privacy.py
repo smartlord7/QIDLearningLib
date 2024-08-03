@@ -174,6 +174,55 @@ def closeness_centrality(df: pd.DataFrame, quasi_identifiers: list, sensitive_at
     return GroupedMetric(np.array(closeness_values), group_labels, name='Closeness Centrality')
 
 
+def closeness_centrality_numpy(df, quasi_identifiers, sensitive_attributes: list):
+    # Calculate the overall distribution
+    overall_counts = df[sensitive_attributes].value_counts(normalize=True)
+    overall_values = overall_counts.values
+    overall_index = overall_counts.index
+
+    # Create a mapping from overall index to numeric values if needed
+    if not all(isinstance(x, (int, float)) for x in overall_index):
+        category_mapping = {val: i for i, val in enumerate(overall_index)}
+        overall_index_numeric = np.array([category_mapping[val] for val in overall_index], dtype=float)
+    else:
+        overall_index_numeric = np.array(overall_index, dtype=float)
+
+    # Convert category mapping to NumPy array
+    category_mapping = {val: i for i, val in enumerate(overall_index)}
+
+    # Group the DataFrame based on quasi-identifiers
+    grouped = df.groupby(quasi_identifiers)
+
+    # Precompute the list of all group labels
+    group_labels = []
+
+    # List to hold all closeness values
+    closeness_values = []
+
+    for group_name, group_df in grouped:
+        # Compute the group's distribution
+        group_counts = group_df[sensitive_attributes].value_counts(normalize=True)
+        group_values = group_counts.values
+        group_index = group_counts.index
+
+        # Convert group index to numeric using the same mapping
+        if not all(isinstance(val, (int, float)) for val in group_index):
+            group_index_numeric = np.array([category_mapping.get(val, np.nan) for val in group_index], dtype=float)
+        else:
+            group_index_numeric = np.array(group_index, dtype=float)
+
+        # Compute Wasserstein distance
+        closeness = wasserstein_distance(
+            overall_index_numeric, group_index_numeric, overall_values, group_values
+        )
+
+        # Append results
+        closeness_values.append(closeness)
+        group_labels.append(group_name)
+
+    return GroupedMetric(np.array(closeness_values), group_labels, name='Closeness Centrality')
+
+
 def delta_presence(df: pd.DataFrame, quasi_identifiers: list, values: list) -> GroupedMetric:
     """
     Calculate the Delta Presence metric for a given DataFrame, quasi-identifier, and value.

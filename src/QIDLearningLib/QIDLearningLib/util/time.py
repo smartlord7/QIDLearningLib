@@ -28,10 +28,57 @@ import time
 import numpy as np
 
 
-def measure_time(func, df, quasi_identifiers, num_runs=10):
+def measure_time(func, df, quasi_identifiers, sensitive_attributes, num_runs=30):
     times = []
-    for _ in range(num_runs):
+    for i in range(num_runs):
+        print(f"Run {i + 1}/{num_runs}")
         start_time = time.time()
-        func(df, quasi_identifiers)
+        if sensitive_attributes:
+            func(df, quasi_identifiers, sensitive_attributes)
+        else:
+            func(df, quasi_identifiers)
+
         times.append(time.time() - start_time)
     return np.mean(times), np.std(times)
+
+
+def compare_results(original_metric, numpy_metric):
+    if np.array_equal(original_metric.values, numpy_metric.values):
+        return True
+    else:
+        return False
+
+# Function to run tests
+def run_tests(test_cases, df, quasi_identifiers):
+    for data in test_cases:
+        original_func = data[0]
+        new_func = data[1]
+
+        sensitive_attributes = None
+
+        if len(data) == 3:
+            sensitive_attributes = data[2]
+
+        # Measure performance
+        original_mean, original_std = measure_time(original_func, df, quasi_identifiers, sensitive_attributes)
+        new_mean, new_std = measure_time(new_func, df, quasi_identifiers, sensitive_attributes)
+
+        # Get results
+
+        if sensitive_attributes:
+            original_metric = original_func(df, quasi_identifiers, sensitive_attributes)
+            new_metric = new_func(df, quasi_identifiers, sensitive_attributes)
+        else:
+            original_metric = original_func(df, quasi_identifiers)
+            new_metric = new_func(df, quasi_identifiers)
+
+        # Compare results
+        results_match = compare_results(original_metric, new_metric)
+
+        # Print performance results
+        print(f"{original_func.__name__} vs {new_func.__name__}")
+        print(f"Original function duration: {original_mean:.6f} seconds (±{original_std:.6f})")
+        print(f"New function duration: {new_mean:.6f} seconds (±{new_std:.6f})")
+        print(f"Speedup: {original_mean / new_mean:.2f}x")
+        print(f"Results match: {results_match}")
+        print("-" * 40)

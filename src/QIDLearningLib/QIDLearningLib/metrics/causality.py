@@ -2,8 +2,8 @@
 QIDLearningLib
 
 Library Description (QIDLearningLib):
-QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
-The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identifiers recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identifiers recognition algorithms.
 
 Module Description (metrics.causality):
 This module in QIDLearningLib includes functions to calculate various causality metrics in order to study the causal effect
@@ -32,9 +32,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 
-from QIDLearningLib.structure.grouped_metric import GroupedMetric
-from QIDLearningLib.util.data import encode_categorical
-from QIDLearningLib.util.stats import t_test, ks_test
+from structure.grouped_metric import GroupedMetric
+from util.data import encode_categorical
+from util.stats import t_test, ks_test
 
 
 def covariate_shift(df, quasi_identifiers, treatment_col, treatment_value):

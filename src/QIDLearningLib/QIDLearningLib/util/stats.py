@@ -2,8 +2,8 @@
 QIDLearningLib
 
 Library Description (QIDLearningLib):
-QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identification recognition processes.
-The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identification recognition algorithms.
+QIDLearningLib is a Python library designed to provide a comprehensive set of metrics for quasi-identifiers recognition processes.
+The library encompasses metrics for assessing data privacy, data utility, and the performance of quasi-identifiers recognition algorithms.
 
 Module Description (util.stats):
 This module in QIDLearningLib allows provides some auxiliar functions for the statistical tests necessary, specifically in the causality metrics module.

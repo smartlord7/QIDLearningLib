@@ -25,7 +25,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 import pandas as pd
 
-from metrics.data_utility import (
+from QIDLearningLib.metrics.data_utility import (
     mean_squared_err,
     accuracy,
     utility_score,
@@ -33,7 +33,7 @@ from metrics.data_utility import (
     distinct_values_utility,
     completeness_utility
 )
-from util.data import generate_synthetic_dataset, calculate_core
+from QIDLearningLib.util.data import generate_synthetic_dataset, calculate_core
 from typing import List
 
 

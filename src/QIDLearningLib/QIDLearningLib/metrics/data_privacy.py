@@ -29,7 +29,7 @@ from typing import Iterable, Any
 from scipy.special import kl_div
 from scipy.stats import wasserstein_distance
 from typing_extensions import deprecated
-from structure.grouped_metric import GroupedMetric
+from QIDLearningLib.structure.grouped_metric import GroupedMetric
 
 
 def k_anonymity(df: pd.DataFrame, quasi_identifiers: Iterable[str]) -> GroupedMetric:

@@ -23,7 +23,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
 
-from metrics.performance import (
+from QIDLearningLib.metrics.performance import (
     accuracy,
     precision,
     recall,
@@ -34,7 +34,7 @@ from metrics.performance import (
     jaccard_similarity,
     dice_similarity
 )
-from util.data import generate_random_sets
+from QIDLearningLib.util.data import generate_random_sets
 
 
 def test_performance_metrics(

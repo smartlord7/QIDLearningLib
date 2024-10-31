@@ -30,7 +30,7 @@ from typing import Union
 
 
 class GroupedMetric:
-    def __init__(self, values: Union[list, np.ndarray], group_labels: Union[list, np.ndarray], name: str = None, lazy_calc: bool = True):
+    def __init__(self, values: Union[list, np.ndarray], group_labels: Union[list, np.ndarray], name: str = None, lazy_calc: bool = False):
         """
         Create an instance of the GroupedMetric class.
 

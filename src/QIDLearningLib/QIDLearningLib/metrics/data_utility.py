@@ -28,7 +28,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error, accuracy_score
 
-from structure.grouped_metric import GroupedMetric
+from QIDLearningLib.structure.grouped_metric import GroupedMetric
 
 
 def mean_squared_err(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str, true_values: pd.Series) -> GroupedMetric:
@@ -347,3 +347,10 @@ def completeness_utility(df: pd.DataFrame, quasi_identifiers: list, target_attri
 
     # Create a GroupedMetric object with the calculated completeness utility values, group labels, and a name
     return GroupedMetric(np.array(completeness_values), group_labels, name='Completeness Utility')
+
+
+def attr_length_penalty(quasi_identifiers: list, attributes: list):
+    num_attributes = len(quasi_identifiers)
+    proportion = num_attributes / len(attributes)
+
+    return (1 - proportion) ** 2 + proportion ** 2

@@ -32,9 +32,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 
-from structure.grouped_metric import GroupedMetric
-from util.data import encode_categorical
-from util.stats import t_test, ks_test
+from QIDLearningLib.structure.grouped_metric import GroupedMetric
+from QIDLearningLib.util.data import encode_categorical
+from QIDLearningLib.util.stats import t_test, ks_test
 
 
 

@@ -27,7 +27,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 """
 
 
-def specificity(predicted: set, actual: set) -> float:
+def specificity(predicted: set, actual: set, attributes: set) -> float:
     """
     Calculate the Specificity metric for binary classification.
 
@@ -52,8 +52,8 @@ def specificity(predicted: set, actual: set) -> float:
 
     """
 
-    # Calculate the true negatives by finding instances that are in the actual set but not in the predicted set
-    true_negatives = len(actual - predicted)
+    # Calculate True Negatives (TN): Elements not in actual or predicted sets, given a universal set U
+    true_negatives = len(attributes - (actual | predicted)) if attributes else None  # U must be defined for this calculation
 
     # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
     false_positives = len(predicted - actual)
@@ -67,7 +67,7 @@ def specificity(predicted: set, actual: set) -> float:
         return true_negatives / (true_negatives + false_positives)
 
 
-def fpr(predicted: set, actual: set) -> float:
+def fpr(predicted: set, actual: set, attributes: set) -> float:
     """
     Calculate the False Positive Rate (FPR) metric for binary classification.
 
@@ -91,8 +91,8 @@ def fpr(predicted: set, actual: set) -> float:
 
     """
 
-    # Calculate the true negatives by finding instances that are in the actual set but not in the predicted set
-    true_negatives = len(actual - predicted)
+    # Calculate True Negatives (TN): Elements not in actual or predicted sets, given a universal set U
+    true_negatives = len(attributes - (actual | predicted)) if attributes else None  # U must be defined for this calculation
 
     # Calculate the false positives by finding instances that are in the predicted set but not in the actual set
     false_positives = len(predicted - actual)

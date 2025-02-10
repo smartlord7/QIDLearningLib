@@ -23,7 +23,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
 
-from QIDLearningLib.metrics.performance import (
+from src.QIDLearningLib.QIDLearningLib.metrics.performance import (
     accuracy,
     precision,
     recall,
@@ -39,7 +39,8 @@ from QIDLearningLib.util.data import generate_random_sets
 
 def test_performance_metrics(
     predicted_qid: set[str],
-    actual_qid: set[str]
+    actual_qid: set[str],
+        attributes: set[[str]]
 ) -> None:
     """
     Test performance metrics for predicted quasi-identifiers against actual quasi-identifiers.
@@ -67,8 +68,8 @@ def test_performance_metrics(
     print("Recall:", recall(predicted_qid, actual_qid))
     print("F1 Score:", f1_score(predicted_qid, actual_qid))
     print("F2 Score:", f2_score(predicted_qid, actual_qid))
-    print("Specificity:", specificity(predicted_qid, actual_qid))
-    print("FPR:", fpr(predicted_qid, actual_qid))
+    print("Specificity:", specificity(predicted_qid, actual_qid, attributes))
+    print("FPR:", fpr(predicted_qid, actual_qid, attributes))
     print("Jaccard Index:", jaccard_similarity(predicted_qid, actual_qid))
     print("Dice Similarity:", dice_similarity(predicted_qid, actual_qid))
 
@@ -89,9 +90,12 @@ def main() -> None:
     >>> main()
     """
     # Example usage
-    predicted_quasi_identifiers, actual_quasi_identifiers = generate_random_sets(size=100, overlap_ratio=0.9)
+    size = 100
+    predicted_quasi_identifiers, actual_quasi_identifiers = generate_random_sets(size=size, overlap_ratio=0.9)
+    n_attributes = 2 * size
+    attributes = set(range(1, n_attributes + 1))
 
-    test_performance_metrics(predicted_quasi_identifiers, actual_quasi_identifiers)
+    test_performance_metrics(predicted_quasi_identifiers, actual_quasi_identifiers, attributes)
 
 if __name__ == '__main__':
     main()

@@ -25,7 +25,6 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 from QIDLearningLib.metrics.data_privacy import *
 from QIDLearningLib.util.data import generate_synthetic_dataset
-from QIDLearningLib.util.time import run_tests
 
 
 def analyze_privacy_metrics(df, quasi_identifiers, sensitive_attribute):

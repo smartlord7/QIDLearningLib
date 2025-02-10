@@ -14,19 +14,6 @@ logging.basicConfig(level=logging.INFO,
 matplotlib.use('TkAgg')  # Set the backend before importing pyplot
 import matplotlib.pyplot as plt
 
-def default_greedy_aggregator(metric_values, individual, data, alpha, metrics):
-    """
-    A default aggregator function that combines the metric values.
-    It multiplies each metric value by its coefficient, sums the results,
-    and then divides by (alpha * penalty) where the penalty is taken from
-    the 'Attribute Length Penalty' metric (or 1.0 if not present).
-    """
-    total = 0.0
-    for m in metrics:
-        total += m.coefficient * metric_values[m.name]
-    penalty = metric_values.get("Attribute Length Penalty", 1.0)
-    fitness = total / (alpha * penalty)
-    return fitness
 
 # =============================================================================
 # Greedy Search (Hill-Climbing) Algorithm Class

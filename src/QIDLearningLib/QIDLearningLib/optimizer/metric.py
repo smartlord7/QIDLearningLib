@@ -9,15 +9,7 @@ from QIDLearningLib.structure.grouped_metric import GroupedMetric
 # =============================================================================
 
 class Metric:
-    """
-    A simple container for a metric. The user supplies:
-      - name: a string name,
-      - coefficient: a numerical weight,
-      - compute_func: a function with signature
-            compute_func(individual, best_individual, data, prev_value=None)
-        that returns a (float) metric value,
-      - maximize: a Boolean indicating if a higher value is better.
-    """
+    """Container for a metric, with a function to compute its value."""
 
     def __init__(self, name, coefficient, compute_func, maximize=True):
         self.name = name
@@ -26,91 +18,78 @@ class Metric:
         self.maximize = maximize
         logging.info(f"Metric initialized: {self.name}, coefficient: {self.coefficient}, maximize: {self.maximize}")
 
-
     def compute(self, individual, best_individual, data, prev_value=None):
+        return self._compute_metric_with_logging(individual, best_individual, data, prev_value)
+
+    def _compute_metric_with_logging(self, individual, best_individual, data, prev_value):
+        """Compute a metric and log the result."""
         value = self.compute_func(individual, best_individual, data, prev_value)
         logging.info(f"Metric [{self.name}] computed value: {value}")
         return value
 
     @staticmethod
-    def compute_distinction(individual, best_individual, data, prev_value=None):
-        selected_indices = np.where(individual == 1)[0]
-        selected_columns = data.columns[selected_indices].tolist()
-        if len(selected_columns) == 0:
-            logging.info("compute_distinction: No columns selected, returning 0.0")
+    def _compute_metric_with_qid(individual, data, qid_function):
+        """Generic method for computing QID-based metrics."""
+        selected_columns = Metric._get_selected_columns(individual, data)
+        if not selected_columns:
             return 0.0
-        result = qid.distinction(data, selected_columns) / 100.0
-        logging.info(f"compute_distinction: Selected columns: {selected_columns}, Result: {result}")
-        return result
+        return qid_function(data, selected_columns) / 100.0
+
+    @staticmethod
+    def _compute_metric_with_pr(individual, data, pr_function):
+        """Generic method for computing data privacy-based metrics."""
+        selected_columns = Metric._get_selected_columns(individual, data)
+        if not selected_columns:
+            return 0.0
+        result = pr_function(data, selected_columns)
+        return result.mean if isinstance(result, GroupedMetric) else result
+
+    @staticmethod
+    def _get_selected_columns(individual, data):
+        """Retrieve selected columns based on a binary individual representation."""
+        selected_indices = np.where(individual == 1)[0]
+        return data.columns[selected_indices].tolist()
+
+    # ==============================
+    # Metric Computation Methods
+    # ==============================
+
+    @staticmethod
+    def compute_distinction(individual, best_individual, data, prev_value=None):
+        return Metric._compute_metric_with_qid(individual, data, qid.distinction)
 
     @staticmethod
     def compute_separation(individual, best_individual, data, prev_value=None):
-        selected_indices = np.where(individual == 1)[0]
-        selected_columns = data.columns[selected_indices].tolist()
-        if len(selected_columns) == 0:
-            logging.info("compute_separation: No columns selected, returning 0.0")
-            return 0.0
-        result = qid.separation(data, selected_columns) / 100.0
-        logging.info(f"compute_separation: Selected columns: {selected_columns}, Result: {result}")
-        return result
+        return Metric._compute_metric_with_qid(individual, data, qid.separation)
 
     @staticmethod
     def compute_k_anonymity(individual, best_individual, data, prev_value=None):
-        selected_indices = np.where(individual == 1)[0]
-        selected_columns = data.columns[selected_indices].tolist()
-        if len(selected_columns) == 0:
-            logging.info("compute_k_anonymity: No columns selected, returning 0.0")
+        return Metric._compute_metric_with_pr(individual, data, pr.k_anonymity)
+
+    @staticmethod
+    def compute_delta_metric(individual, best_individual, data, compute_func):
+        """Compute the difference between the current and best individual for a given metric."""
+        if best_individual is None:
             return 0.0
-        result = pr.k_anonymity(data, selected_columns)
-        if isinstance(result, GroupedMetric):
-            final_value = result.mean
-        else:
-            final_value = result
-        logging.info(f"compute_k_anonymity: Selected columns: {selected_columns}, Result: {final_value}")
-        return final_value
+        return compute_func(individual, None, data) - compute_func(best_individual, None, data)
 
     @staticmethod
     def compute_delta_distinction(individual, best_individual, data, prev_value=None):
-        if best_individual is None:
-            logging.info("compute_delta_distinction: No best individual available, returning 0.0")
-            return 0.0
-        current = Metric.compute_distinction(individual, None, data)
-        best_val = Metric.compute_distinction(best_individual, None, data)
-        delta = current - best_val
-        logging.info(f"compute_delta_distinction: Current: {current}, Best: {best_val}, Delta: {delta}")
-        return delta
+        return Metric.compute_delta_metric(individual, best_individual, data, Metric.compute_distinction)
 
     @staticmethod
     def compute_delta_separation(individual, best_individual, data, prev_value=None):
-        if best_individual is None:
-            logging.info("compute_delta_separation: No best individual available, returning 0.0")
-            return 0.0
-        current = Metric.compute_separation(individual, None, data)
-        best_val = Metric.compute_separation(best_individual, None, data)
-        delta = current - best_val
-        logging.info(f"compute_delta_separation: Current: {current}, Best: {best_val}, Delta: {delta}")
-        return delta
+        return Metric.compute_delta_metric(individual, best_individual, data, Metric.compute_separation)
 
     @staticmethod
     def compute_attribute_length_penalty(individual, best_individual, data, prev_value=None):
         num_attributes = np.sum(individual)
         proportion = num_attributes / data.shape[1]
-        penalty = (1 - proportion) ** 2 + proportion ** 2
-        logging.info(
-            f"compute_attribute_length_penalty: Num attributes: {num_attributes}, Proportion: {proportion}, Penalty: {penalty}")
-        return penalty
+        return (1 - proportion) ** 2 + proportion ** 2
 
     @staticmethod
     def default_aggregator(metric_values, individual, data, alpha, metrics):
-        """
-        A default aggregator function that combines the metric values.
-        It multiplies each metric value by its coefficient, sums the results,
-        and then divides by (alpha * penalty) where the penalty is taken from
-        the 'Attribute Length Penalty' metric (or 1.0 if not present).
-        """
-        total = 0.0
-        for m in metrics:
-            total += m.coefficient * metric_values[m.name]
+        """Aggregate metric values, applying weights and penalties."""
+        total = sum(m.coefficient * metric_values[m.name] for m in metrics)
         penalty = metric_values.get("Attribute Length Penalty", 1.0)
-        fitness = total / (alpha * penalty)
-        return fitness
+        return total / (alpha * penalty)

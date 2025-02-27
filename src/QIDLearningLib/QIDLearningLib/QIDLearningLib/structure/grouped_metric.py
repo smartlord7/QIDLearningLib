@@ -53,6 +53,8 @@ class GroupedMetric:
 
         """
         self.values = np.array(values)
+        if self.values.ndim == 1:
+            self.values = np.array([[0]])
         self.group_labels = np.array(group_labels)
         self.name = name
         self.lazy_calc = lazy_calc

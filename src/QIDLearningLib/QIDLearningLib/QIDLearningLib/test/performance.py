@@ -23,7 +23,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
 
-from src.QIDLearningLib.QIDLearningLib.metrics.performance import (
+from QIDLearningLib.metrics.performance import (
     accuracy,
     precision,
     recall,

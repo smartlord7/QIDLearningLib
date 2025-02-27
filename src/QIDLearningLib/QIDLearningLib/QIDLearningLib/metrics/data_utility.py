@@ -27,6 +27,7 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_squared_error, accuracy_score
+from scipy.stats import entropy
 
 from QIDLearningLib.structure.grouped_metric import GroupedMetric
 
@@ -347,6 +348,44 @@ def completeness_utility(df: pd.DataFrame, quasi_identifiers: list, target_attri
 
     # Create a GroupedMetric object with the calculated completeness utility values, group labels, and a name
     return GroupedMetric(np.array(completeness_values), group_labels, name='Completeness Utility')
+
+
+def group_entropy(df: pd.DataFrame, quasi_identifiers: list) -> GroupedMetric:
+    """
+    Calculate the Entropy of the groups formed by quasi-identifiers.
+
+    Synopse:
+    Group Entropy measures the randomness or disorder within groups formed by quasi-identifiers.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the entropy
+    of the quasi-identifiers' distribution within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+
+    Return:
+    GroupedMetric: Entropy metric for each group.
+
+    Example:
+    >>> entropy_metric = group_entropy(df, ['Age', 'Gender'])
+    >>> print(repr(entropy_metric))
+
+    See Also:
+    - distinct_values_utility: Calculates the Distinct Values Utility metric.
+
+    """
+    # Group the DataFrame based on quasi_identifiers and compute the size of each group
+    grouped = df.groupby(quasi_identifiers).size()
+
+    # Calculate probabilities and entropy for each group in a vectorized way
+    probabilities = grouped / grouped.sum()
+    entropy_values = probabilities.groupby(level=0).apply(lambda x: entropy(x))
+
+    # Create a GroupedMetric object with the calculated entropy values and group labels
+    return GroupedMetric(entropy_values.values, entropy_values.index, name='Group Entropy')
+
 
 
 def attr_length_penalty(quasi_identifiers: list, attributes: list):

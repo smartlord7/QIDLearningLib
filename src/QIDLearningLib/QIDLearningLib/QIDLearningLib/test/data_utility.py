@@ -31,9 +31,10 @@ from QIDLearningLib.metrics.data_utility import (
     utility_score,
     range_utility,
     distinct_values_utility,
-    completeness_utility
+    completeness_utility,
+    group_entropy
 )
-from QIDLearningLib.util.data import generate_synthetic_dataset, calculate_core
+from QIDLearningLib.util.data import generate_synthetic_dataset
 from typing import List
 
 
@@ -97,8 +98,11 @@ def analyze_data_utility_metrics(
     print(repr(completeness_utility_metric))
     completeness_utility_metric.plot_all()
 
-    print("\nCore:")
-    print(calculate_core(df))
+    print("\nEntropy:")
+    entropy_metric = group_entropy(df, quasi_identifiers)
+    print(repr(entropy_metric))
+    entropy_metric.plot_all()
+
 
 def main() -> None:
     """

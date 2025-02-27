@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 import logging
 import pandas as pd
 import numpy as np
-from optimizer.metric import Metric
-from optimizer.util import load_data_from_folder
-from optimizer.graph import plot_evolution  # If you have a common plotting function
+from QIDLearningLib.optimizer.metric import Metric
+from QIDLearningLib.optimizer.util import load_data_from_folder
+from QIDLearningLib.optimizer.graph import plot_evolution  # If you have a common plotting function
 
 # Configure logging
 logging.basicConfig(level=logging.INFO,
@@ -155,7 +155,7 @@ def process():
     """
     Process function for running Tabu Search on all datasets.
     """
-    folder_path = '../../../datasets'
+    folder_path = '../../../../datasets'
     logging.info(f"Process started. Loading datasets from {folder_path}")
     data_files, headers = load_data_from_folder(folder_path)
     results = []

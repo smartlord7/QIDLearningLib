@@ -12,8 +12,8 @@ import numpy as np
 import pandas as pd
 import matplotlib
 
-from optimizer.metric import Metric
-from optimizer.util import load_data_from_folder
+from QIDLearningLib.optimizer.metric import Metric
+from QIDLearningLib.optimizer.util import load_data_from_folder
 
 matplotlib.use('TkAgg')  # Set the backend before importing pyplot
 import matplotlib.pyplot as plt
@@ -318,7 +318,7 @@ def plot_evolution(history, metrics, generations):
 # =============================================================================
 
 def process():
-    folder_path = '../../../datasets'
+    folder_path = '../../../../datasets'
     logging.info(f"Process started. Loading datasets from {folder_path}")
     data_files, headers = load_data_from_folder(folder_path)
     results = []

@@ -32,7 +32,7 @@ from QIDLearningLib.metrics.data_utility import (
     range_utility,
     distinct_values_utility,
     completeness_utility,
-    group_entropy
+    group_entropy, information_gain
 )
 from QIDLearningLib.util.data import generate_synthetic_dataset
 from typing import List
@@ -102,6 +102,11 @@ def analyze_data_utility_metrics(
     entropy_metric = group_entropy(df, quasi_identifiers)
     print(repr(entropy_metric))
     entropy_metric.plot_all()
+
+    print("\nInformation Gain:")
+    information_gain_metric = information_gain(df, quasi_identifiers, target_attribute)
+    print(repr(information_gain_metric))
+    information_gain_metric.plot_all()
 
 
 def main() -> None:

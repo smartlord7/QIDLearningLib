@@ -386,6 +386,56 @@ def group_entropy(df: pd.DataFrame, quasi_identifiers: list) -> GroupedMetric:
     # Create a GroupedMetric object with the calculated entropy values and group labels
     return GroupedMetric(entropy_values.values, entropy_values.index, name='Group Entropy')
 
+def information_gain(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -> GroupedMetric:
+    """
+    Calculate the Information Gain (IG) of the groups formed by quasi-identifiers with respect to the target attribute.
+
+    Synopse:
+    Information Gain measures how much information the quasi-identifiers provide about the target attribute.
+    It is the reduction in entropy of the target attribute when conditioned on the quasi-identifiers.
+
+    Details:
+    The metric is computed by first calculating the entropy of the target attribute, and then calculating
+    the conditional entropy of the target attribute given the quasi-identifiers.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which information gain is calculated.
+
+    Return:
+    GroupedMetric: Information Gain metric for each group formed by the quasi-identifiers.
+
+    Example:
+    >>> ig_metric = information_gain(df, ['Age', 'Gender'], 'Income')
+    >>> print(repr(ig_metric))
+
+    See Also:
+    - distinct_values_utility: Calculates the Distinct Values Utility metric.
+
+    """
+    # Calculate the entropy of the target attribute
+    target_entropy = entropy(df[target_attribute].value_counts(normalize=True), base=2)
+
+    # Group the DataFrame based on quasi-identifiers and calculate conditional entropy of the target
+    grouped = df.groupby(quasi_identifiers)[target_attribute]
+
+    # Calculate the conditional entropy for each group
+    def conditional_entropy(group):
+        group_counts = group.value_counts(normalize=True)
+        return entropy(group_counts, base=2)
+
+    conditional_entropies = grouped.apply(conditional_entropy)
+
+    # Calculate information gain for each group
+    info_gain_values = target_entropy - conditional_entropies
+
+    # Collect group labels (the combination of quasi-identifiers)
+    group_labels = [name for name in conditional_entropies.index]
+
+    # Return a GroupedMetric object with the calculated information gain values and group labels
+    return GroupedMetric(np.array(info_gain_values), group_labels, name='Information Gain')
+
 
 
 def attr_length_penalty(quasi_identifiers: list, attributes: list):

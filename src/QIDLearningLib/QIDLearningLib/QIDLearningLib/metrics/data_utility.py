@@ -438,6 +438,55 @@ def information_gain(df: pd.DataFrame, quasi_identifiers: list, target_attribute
 
 
 
+def gini_index(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str) -> GroupedMetric:
+    """
+    Calculate the Gini Index (Gini Impurity) of the groups formed by quasi-identifiers with respect to the target attribute.
+
+    Synopse:
+    The Gini Index measures the impurity of the target attribute within each group formed by the quasi-identifiers.
+    Lower Gini values indicate purer groups, where the target attribute values are more homogenous.
+
+    Details:
+    The metric is computed by grouping the DataFrame based on quasi-identifiers and calculating the Gini Index
+    of the target attribute within each group.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers.
+    - target_attribute (str): The target attribute for which Gini Index is calculated.
+
+    Return:
+    GroupedMetric: Gini Index metric for each group formed by the quasi-identifiers.
+
+    Example:
+    >>> gini_metric = gini_index(df, ['Age', 'Gender'], 'Income')
+    >>> print(repr(gini_metric))
+
+    See Also:
+    - information_gain: Calculates the Information Gain metric.
+
+    """
+
+    # Group the DataFrame based on quasi-identifiers and target attribute
+    grouped = df.groupby(quasi_identifiers)[target_attribute]
+
+    # Function to calculate Gini Index for each group
+    def gini_impurity(group):
+        # Calculate the proportions of each unique target value in the group
+        proportions = group.value_counts(normalize=True)
+        # Calculate the Gini index for the group
+        return 1 - (proportions ** 2).sum()
+
+    # Apply the Gini index function to each group
+    gini_values = grouped.apply(gini_impurity)
+
+    # Collect the group labels (the combination of quasi-identifiers)
+    group_labels = [name for name in gini_values.index]
+
+    # Return a GroupedMetric object with the calculated Gini index values and group labels
+    return GroupedMetric(np.array(gini_values), group_labels, name='Gini Index')
+
+
 def attr_length_penalty(quasi_identifiers: list, attributes: list):
     num_attributes = len(quasi_identifiers)
     proportion = num_attributes / len(attributes)

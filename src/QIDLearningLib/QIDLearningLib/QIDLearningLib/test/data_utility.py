@@ -32,7 +32,7 @@ from QIDLearningLib.metrics.data_utility import (
     range_utility,
     distinct_values_utility,
     completeness_utility,
-    group_entropy, information_gain
+    group_entropy, information_gain, gini_index
 )
 from QIDLearningLib.util.data import generate_synthetic_dataset
 from typing import List
@@ -107,6 +107,11 @@ def analyze_data_utility_metrics(
     information_gain_metric = information_gain(df, quasi_identifiers, target_attribute)
     print(repr(information_gain_metric))
     information_gain_metric.plot_all()
+
+    print("\nGini Index:")
+    gini_index_metric = gini_index(df, quasi_identifiers, target_attribute)
+    print(repr(gini_index_metric))
+    gini_index_metric.plot_all()
 
 
 def main() -> None:

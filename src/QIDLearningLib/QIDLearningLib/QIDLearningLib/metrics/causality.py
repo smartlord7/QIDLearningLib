@@ -24,6 +24,7 @@ This open-source software is released under the terms of the GNU General Public 
 For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
+from typing import List
 
 import numpy as np
 import pandas as pd
@@ -31,7 +32,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-
+from causallearn.search.ConstraintBased.PC import pc
+from causallearn.search.ScoreBased.GES import ges
 from QIDLearningLib.structure.grouped_metric import GroupedMetric
 from QIDLearningLib.util.data import encode_categorical
 from QIDLearningLib.util.stats import t_test, ks_test
@@ -246,3 +248,58 @@ def propensity_score_overlap(df, quasi_identifiers, treatment_col, treatment_val
     values = np.array(overlap_metrics)
 
     return GroupedMetric(values, group_labels=group_labels, name='Propensity Score Overlap')
+
+
+def causal_importance(df: pd.DataFrame, quasi_identifiers: List[str], causal_graph_algorithm:str='PC') -> float:
+    """
+    Calculate the causal importance of the given quasi-identifiers based on the adjacency matrix of the causal graph.
+
+    Synopse:
+    This metric calculates the causal importance of the given quasi-identifiers (QIDs) in a learned causal graph.
+    It does this by summing the adjacency matrix values (causal relationships) that involve the quasi-identifiers.
+
+    Details:
+    The function uses a causal discovery algorithm (e.g., PC) to learn the causal graph from the data, and
+    calculates the causal importance by summing the adjacency matrix entries related to the quasi-identifiers.
+
+    Parameters:
+    - df (pd.DataFrame): The input DataFrame containing the dataset.
+    - quasi_identifiers (list): List of column names representing quasi-identifiers whose causal importance is to be calculated.
+    - causal_graph_algorithm (str): The causal discovery algorithm to use. Options are 'PC'. Default is 'PC'.
+
+    Return:
+    - float: The calculated causal importance, which is the sum of adjacency matrix values involving the quasi-identifiers.
+
+    Example:
+    >>> importance = causal_importance(df, ['Age', 'Gender'], causal_graph_algorithm='PC')
+    >>> print(importance)
+
+    """
+
+    df = encode_categorical(df, df.columns)
+    # Learn causal graph using the PC algorithm
+    if causal_graph_algorithm == 'PC':
+        # PC algorithm for causal discovery
+        causal_graph = pc(df.values).G.graph
+        causal_graph[causal_graph == -1] = 1
+    elif causal_graph_algorithm == 'GES':
+        causal_graph = ges(df.values)['G']
+    else:
+        raise ValueError("Only the 'PC' algorithm is implemented here.")
+
+    # Extract adjacency matrix from the learned causal graph
+    np.fill_diagonal(causal_graph, 0)
+
+    # Map the column names of the dataframe to indices in the adjacency matrix
+    attribute_names = df.columns.tolist()
+
+    # Calculate the causal importance by summing the adjacency matrix values related to quasi-identifiers
+    causal_importance_value = 0
+    for qid in quasi_identifiers:
+        if qid in attribute_names:
+            qid_idx = attribute_names.index(qid)
+            # Sum the row and column corresponding to the quasi-identifier
+            causal_importance_value += np.sum(
+                np.abs(causal_graph[qid_idx]))  # Summing absolute values for both directions
+
+    return causal_importance_value

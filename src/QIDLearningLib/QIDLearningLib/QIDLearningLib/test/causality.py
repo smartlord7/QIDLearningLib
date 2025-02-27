@@ -22,12 +22,12 @@ This open-source software is released under the terms of the GNU General Public 
 For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
+from typing import List
 
 import matplotlib.pyplot as plt
 from pandas import DataFrame
-from typing import List
 
-from QIDLearningLib.metrics.causality import balance_test, covariate_shift, propensity_score_overlap
+from QIDLearningLib.metrics.causality import causal_importance, propensity_score_overlap, balance_test, covariate_shift
 from QIDLearningLib.util.data import generate_synthetic_dataset
 
 
@@ -65,15 +65,21 @@ def analyze_causality_metrics(
 
     """
 
-    print("\nCovariate Shift Metrics:")
-    causality_metrics_covariate_shift = covariate_shift(df, quasi_identifiers, treatment_col, treatment_value)
-    print(repr(causality_metrics_covariate_shift))
-    causality_metrics_covariate_shift.plot_all()
+
+    print("\nCausal Importance Metric:")
+    causal_importance_metric = causal_importance(df, quasi_identifiers)
+    print(repr(causal_importance_metric))
 
     print("\nBalance Test Metrics:")
     causality_metrics_balance_test = balance_test(df, quasi_identifiers, treatment_col, treatment_value)
     print(repr(causality_metrics_balance_test))
     causality_metrics_balance_test.plot_all()
+
+    print("\nCovariate Shift Metrics:")
+    causality_metrics_covariate_shift = covariate_shift(df, quasi_identifiers, treatment_col, treatment_value)
+    print(repr(causality_metrics_covariate_shift))
+    causality_metrics_covariate_shift.plot_all()
+
 
     print("\nPropensity Score Overlap Metric:")
     causality_metrics_propensity_overlap = propensity_score_overlap(df, quasi_identifiers, treatment_col, treatment_value)

@@ -487,8 +487,42 @@ def gini_index(df: pd.DataFrame, quasi_identifiers: list, target_attribute: str)
     return GroupedMetric(np.array(gini_values), group_labels, name='Gini Index')
 
 
-def attr_length_penalty(quasi_identifiers: list, attributes: list):
+def attr_length_penalty(quasi_identifiers: list, attributes: list) -> float:
+    """
+    Calculate the attribute length penalty based on the proportion of quasi-identifiers in the total set of attributes.
+
+    Synopse:
+    This metric calculates a penalty that considers the number of quasi-identifiers relative to the total set of attributes.
+    It is based on the squared difference between the proportion of quasi-identifiers and their complement.
+    This penalty is useful when optimizing the selection of quasi-identifiers for tasks like data anonymization.
+
+    Details:
+    The penalty function computes the square of the difference between the proportion of quasi-identifiers in the dataset
+    and the complement of that proportion. A higher proportion of quasi-identifiers results in a lower penalty, while fewer
+    quasi-identifiers lead to a higher penalty.
+
+    Parameters:
+    - quasi_identifiers (list): List of quasi-identifiers (attributes considered as quasi-identifiers).
+    - attributes (list): List of all attributes in the dataset.
+
+    Return:
+    - float: The calculated penalty, where a smaller value indicates a better balance between quasi-identifiers and other attributes.
+
+    Example:
+    >>> penalty = attr_length_penalty(['Age', 'Gender'], ['Age', 'Gender', 'Income', 'ZipCode'])
+    >>> print(penalty)
+    0.25
+
+    See Also:
+    - Other metrics related to attribute selection and data utility.
+
+    """
+    # Calculate the number of quasi-identifiers
     num_attributes = len(quasi_identifiers)
+
+    # Calculate the proportion of quasi-identifiers relative to the total number of attributes
     proportion = num_attributes / len(attributes)
 
+    # Return the calculated penalty based on the squared differences
     return (1 - proportion) ** 2 + proportion ** 2
+

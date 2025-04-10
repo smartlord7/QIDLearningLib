@@ -30,15 +30,40 @@ from sklearn.preprocessing import LabelEncoder
 from typing import Set, Tuple, List
 
 
-def generate_synthetic_dataset(num_records: int = 10000) -> pd.DataFrame:
+def generate_synthetic_dataset(
+    num_records: int = 10000,
+    age_range: tuple = (12, 90),
+    income_mean: float = 50000,
+    income_std: float = 15000,
+    diseases: list = ['A', 'B', 'C', 'D', 'E', 'F'],
+    genders: list = ['Male', 'Female', 'Non-binary', 'Other'],
+    countries: list = ['USA', 'Canada', 'UK', 'Germany'],
+    education_levels: list = ['High School', 'Bachelor', 'Master', 'PhD'],
+    marital_status: list = ['Single', 'Married', 'Divorced', 'Widowed'],
+    employment_status: list = ['Employed', 'Unemployed', 'Self-employed', 'Student'],
+    housing_types: list = ['Owned', 'Rented', 'Mortgaged', 'Living with Parents'],
+    credit_score_range: tuple = (300, 850)
+) -> pd.DataFrame:
     """
-    Generate a synthetic dataset with random attributes.
+    Generate a synthetic dataset with customizable attributes.
 
     Synopse:
-    This function generates a synthetic dataset with attributes such as Age, Gender, Income, Disease, Country, and Education.
+    This function generates a synthetic dataset with customizable attributes such as Age, Gender, Income,
+    Disease, Country, Education, Marital Status, Employment Status, Housing Type, and Credit Score.
 
     Parameters:
     - num_records (int): Number of records in the dataset.
+    - age_range (tuple): The range of ages (min, max).
+    - income_mean (float): The mean income.
+    - income_std (float): The standard deviation of income.
+    - diseases (list): List of possible disease categories.
+    - genders (list): List of possible gender options.
+    - countries (list): List of possible country options.
+    - education_levels (list): List of possible education levels.
+    - marital_status (list): List of possible marital status options.
+    - employment_status (list): List of possible employment status options.
+    - housing_types (list): List of possible housing types.
+    - credit_score_range (tuple): The range of credit scores (min, max).
 
     Return:
     pd.DataFrame: The synthetic dataset.
@@ -50,25 +75,34 @@ def generate_synthetic_dataset(num_records: int = 10000) -> pd.DataFrame:
     """
     np.random.seed(42)
 
-    ages = np.random.randint(18, 65, num_records)
-    genders = np.random.choice(['Male', 'Female'], num_records)
-    incomes = np.random.normal(50000, 15000, num_records).astype(int)
-    diseases = np.random.choice(['A', 'B', 'C', 'D'], num_records)
+    # Generate Age, Gender, and Income
+    ages = np.random.randint(age_range[0], age_range[1], num_records)
+    genders = np.random.choice(genders, num_records)
+    incomes = np.random.normal(income_mean, income_std, num_records).astype(int)
+    diseases = np.random.choice(diseases, num_records)
 
+    # Generate more complex attributes
+    countries = np.random.choice(countries, num_records)
+    education_levels = np.random.choice(education_levels, num_records)
+    marital_statuses = np.random.choice(marital_status, num_records)
+    employment_statuses = np.random.choice(employment_status, num_records)
+    housing_types = np.random.choice(housing_types, num_records)
+    credit_scores = np.random.randint(credit_score_range[0], credit_score_range[1], num_records)
+
+    # Creating the DataFrame
     df = pd.DataFrame({
         'ID': range(1, num_records + 1),
         'Age': ages,
         'Gender': genders,
         'Income': incomes,
-        'Disease': diseases
+        'Disease': diseases,
+        'Country': countries,
+        'Education': education_levels,
+        'Marital Status': marital_statuses,
+        'Employment Status': employment_statuses,
+        'Housing Type': housing_types,
+        'Credit Score': credit_scores
     })
-
-    # Adding more complexity with additional attributes
-    countries = np.random.choice(['USA', 'Canada', 'UK', 'Germany'], num_records)
-    education_levels = np.random.choice(['High School', 'Bachelor', 'Master', 'PhD'], num_records)
-
-    df['Country'] = countries
-    df['Education'] = education_levels
 
     return df
 

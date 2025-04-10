@@ -22,13 +22,42 @@ This open-source software is released under the terms of the GNU General Public 
 For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 
 """
-from typing import List
+from itertools import combinations
+from typing import List, Dict, Callable
 
 import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
 from pandas import DataFrame
 
 from QIDLearningLib.metrics.causality import causal_importance, propensity_score_overlap, balance_test, covariate_shift
+from QIDLearningLib.metrics.data_privacy import k_anonymity, t_closeness
+from QIDLearningLib.metrics.data_utility import accuracy, range_utility, completeness_utility, mean_squared_err, \
+    group_entropy, gini_index, information_gain
+from QIDLearningLib.metrics.qid_specific import distinction, separation
 from QIDLearningLib.util.data import generate_synthetic_dataset
+
+# Calculate the correlation between multiple metrics
+def calculate_metric_correlations(df: pd.DataFrame, metrics: Dict[str, Callable],
+                                  quasi_identifiers_combinations: List[List[str]]) -> pd.DataFrame:
+    metric_values = []
+    metric_names = metrics.keys()
+
+    # Loop over combinations of quasi-identifiers and compute metrics
+    for combo in quasi_identifiers_combinations:
+        metric_row = []
+        for metric_name, metric_func in metrics.items():
+            value = metric_func(df, combo)
+            metric_row.append(value)
+        metric_values.append(metric_row)
+
+    # Create DataFrame with metric values for each combination
+    metrics_df = pd.DataFrame(metric_values, columns=[metric_name for metric_name in metric_names])
+
+    # Compute correlation matrix
+    correlation_matrix = metrics_df.corr()
+
+    return correlation_matrix
 
 
 def analyze_causality_metrics(
@@ -65,10 +94,34 @@ def analyze_causality_metrics(
 
     """
 
+    sensitive_attribute = 'Disease'
+    true_values = df['Income']
+    columns_excluding_id = [col for col in df.columns.tolist() if col != 'ID']
+    sensitive_attribute = 'Disease'
+    # Example quasi-identifier combinations
+    quasi_identifiers_combinations = list(combinations(columns_excluding_id, 3))
 
-    print("\nCausal Importance Metric:")
-    causal_importance_metric = causal_importance(df, quasi_identifiers)
-    print(repr(causal_importance_metric))
+    # Define the metrics you want to compare
+    metrics = { "Entropy": lambda df, combo: group_entropy(df, list(combo)).mean,
+               "Gini Index": lambda df, combo: gini_index(df, list(combo), 'Income').mean,
+               "Information Gain": lambda df, combo: information_gain(df, list(combo), 'Income').mean,
+                "Range Utility": lambda df, combo: range_utility(df, list(combo), 'Income').mean,
+                "MSE": lambda df, combo: mean_squared_err(df, list(combo), 'Income',true_values).mean,
+               "k-anonymity": lambda df, combo: k_anonymity(df, list(combo)).mean,
+               "Causal Importance": lambda df, combo: causal_importance(df, list(combo)),
+               "Distinction": lambda df, combo: distinction(df, list(combo)),
+               "Separation": lambda df, combo: separation(df, list(combo)),
+               }
+
+    # Calculate the correlation between different metrics
+    correlation_matrix = calculate_metric_correlations(df, metrics, quasi_identifiers_combinations)
+
+    # Plot the correlation matrix
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", vmin=-1, vmax=1, fmt=".2f")
+    plt.title('Correlation Between Different Metrics')
+    plt.show()
+
 
     print("\nBalance Test Metrics:")
     causality_metrics_balance_test = balance_test(df, quasi_identifiers, treatment_col, treatment_value)
@@ -85,6 +138,7 @@ def analyze_causality_metrics(
     causality_metrics_propensity_overlap = propensity_score_overlap(df, quasi_identifiers, treatment_col, treatment_value)
     print(repr(causality_metrics_propensity_overlap))
     causality_metrics_propensity_overlap.plot_all()
+
 
 
 def main() -> None:
@@ -107,7 +161,7 @@ def main() -> None:
     >>> main()
     """
     # Generate synthetic dataset
-    df = generate_synthetic_dataset()
+    df = generate_synthetic_dataset(num_records=10000)
 
     # Example usage for causality metrics
     quasi_identifiers = ['Age', 'Gender', 'Country', 'Education']

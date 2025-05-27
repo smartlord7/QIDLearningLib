@@ -1,0 +1,4 @@
+{
+"sensitive_attributes": ["date", "time"]
+"target_attribute" ["value"]
+}

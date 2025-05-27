@@ -1,0 +1,4 @@
+{
+"sensitive_attributes": ["capital-gain", "capital-loss"]
+"target_attribute" ["capital-gain"]
+}

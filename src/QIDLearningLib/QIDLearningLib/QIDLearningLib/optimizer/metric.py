@@ -1,7 +1,9 @@
+import inspect
 import logging
 import numpy as np
 from QIDLearningLib.metrics import qid_specific as qid
 from QIDLearningLib.metrics import data_privacy as pr
+from QIDLearningLib.metrics.causality import causal_importance
 from QIDLearningLib.structure.grouped_metric import GroupedMetric
 
 # =============================================================================
@@ -41,7 +43,11 @@ class Metric:
         selected_columns = Metric._get_selected_columns(individual, data)
         if not selected_columns:
             return 0.0
-        result = pr_function(data, selected_columns)
+
+        if 'sensitive_arguments' in inspect.signature(pr_function).parameters:
+            result = pr_function(data, selected_columns, data.sensitive_attributes)
+        else:
+            result = pr_function(data, selected_columns)
         return result.mean if isinstance(result, GroupedMetric) else result
 
     @staticmethod
@@ -67,11 +73,20 @@ class Metric:
         return Metric._compute_metric_with_pr(individual, data, pr.k_anonymity)
 
     @staticmethod
+    def compute_l_diverstity(individual, best_individual, data, prev_value=None):
+        return Metric._compute_metric_with_pr(individual, data, pr.l_diversity)
+
+    @staticmethod
     def compute_delta_metric(individual, best_individual, data, compute_func):
         """Compute the difference between the current and best individual for a given metric."""
         if best_individual is None:
             return 0.0
         return compute_func(individual, None, data) - compute_func(best_individual, None, data)
+
+    @staticmethod
+    def compute_causal_importance(individual, best_individual, data, prev_value=None):
+        columns = Metric._get_selected_columns(individual, data)
+        return causal_importance(data, columns, "GES", data.causal_graph)
 
     @staticmethod
     def compute_delta_distinction(individual, best_individual, data, prev_value=None):
@@ -85,7 +100,10 @@ class Metric:
     def compute_attribute_length_penalty(individual, best_individual, data, prev_value=None):
         num_attributes = np.sum(individual)
         proportion = num_attributes / data.shape[1]
+
         return (1 - proportion) ** 2 + proportion ** 2
+
+
 
     @staticmethod
     def default_aggregator(metric_values, individual, data, alpha, metrics):

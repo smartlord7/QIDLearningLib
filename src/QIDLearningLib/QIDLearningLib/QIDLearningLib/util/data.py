@@ -26,6 +26,8 @@ For more details, see https://www.gnu.org/licenses/gpl-3.0.html
 import random
 import numpy as np
 import pandas as pd
+from causallearn.search.ConstraintBased.PC import pc
+from causallearn.search.ScoreBased.GES import ges
 from sklearn.preprocessing import LabelEncoder
 from typing import Set, Tuple, List
 
@@ -202,3 +204,21 @@ def encode_categorical(df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
     for column in columns:
         df[column] = label_encoder.fit_transform(df[column])
     return df
+
+
+def build_causal_graph(df: pd.DataFrame, causal_graph_algorithm:str='PC' ):
+    df = encode_categorical(df, df.columns)
+    # Learn causal graph using the PC algorithm
+    if causal_graph_algorithm == 'PC':
+        # PC algorithm for causal discovery
+        causal_graph = pc(df.values).G.graph
+        causal_graph[causal_graph == -1] = 1
+    elif causal_graph_algorithm == 'GES':
+        causal_graph = ges(df.values)['G']
+    else:
+        raise ValueError("Only the 'PC' algorithm is implemented here.")
+
+    # Extract adjacency matrix from the learned causal graph
+    np.fill_diagonal(causal_graph, 0)
+
+    return causal_graph

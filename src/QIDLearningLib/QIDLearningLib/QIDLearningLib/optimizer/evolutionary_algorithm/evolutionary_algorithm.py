@@ -8,10 +8,13 @@ fitness aggregator. The EA prints and plots the evolution of all metrics.
 import concurrent.futures
 import random
 import logging
+import time
+
 import numpy as np
 import pandas as pd
 import matplotlib
 
+from QIDLearningLib.metrics.causality import build_causal_graph
 from QIDLearningLib.optimizer.metric import Metric
 from QIDLearningLib.optimizer.util import load_data_from_folder
 
@@ -327,12 +330,11 @@ def process():
     # Define the metrics (user-specified)
     # -----------------------------
     metrics = [
-        Metric("Distinction", 5, Metric.compute_distinction, maximize=True),
+        Metric("Distinction", 1, Metric.compute_distinction, maximize=True),
         Metric("Separation", 0.5, Metric.compute_separation, maximize=True),
+        Metric("Causal Importance", 0.5, Metric.compute_causal_importance, maximize=True),
         Metric("k-Anonymity", -0.4, Metric.compute_k_anonymity, maximize=True),
-        Metric("Delta Distinction", 0.2, Metric.compute_delta_distinction, maximize=True),
-        Metric("Delta Separation", 0.2, Metric.compute_delta_separation, maximize=True),
-        Metric("Attribute Length Penalty", -1, Metric.compute_attribute_length_penalty, maximize=True)
+        Metric("Attribute Length Penalty", -2, Metric.compute_attribute_length_penalty, maximize=True)
     ]
 
     for i, (file_name, df) in enumerate(data_files):
@@ -343,7 +345,18 @@ def process():
         ea = EvolutionaryAlgorithm(df, metrics, alpha=5, population_size=50, generations=30,
                                    initial_crossover_rate=0.3, initial_mutation_rate=0.2,
                                    elite_size=1, tournament_size=5, interactive_plot=True)
+
+        df.causal_graph = build_causal_graph(df)
+        df.sensitive_attributes = []
+
+        # Start timing
+        start_time = time.time()
         best_individual, best_fitness, history = ea.run()
+
+        # End timing
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+
         selected_indices = np.where(best_individual == 1)[0]
         logging.info(f"Dataset {file_name}: Best individual selected indices: {selected_indices}")
 
@@ -354,10 +367,11 @@ def process():
         logging.info(f"Dataset {file_name}: Final metrics for best individual: {best_metrics}")
 
         results.append({
-            "file_name": file_name,
+            "dataset": file_name,
             "header": header,
             "best_attributes": df.columns[selected_indices].tolist(),
             "best_fitness": best_fitness,
+            "time": elapsed_time,
             **best_metrics
         })
 
@@ -366,7 +380,7 @@ def process():
 
     # Save aggregated results to CSV.
     df_results = pd.DataFrame(results)
-    df_results.to_csv('aggregated_results.csv', index=False)
+    df_results.to_csv('ea_qids.csv', index=False)
     logging.info("Results saved to 'aggregated_results.csv'")
 
 

@@ -1,0 +1,4 @@
+{
+"sensitive_attributes": ["habitat"]
+"target_attribute" ["edible?"]
+}

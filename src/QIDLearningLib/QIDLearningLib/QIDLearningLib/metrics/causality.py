@@ -35,9 +35,8 @@ from sklearn.preprocessing import OneHotEncoder
 from causallearn.search.ConstraintBased.PC import pc
 from causallearn.search.ScoreBased.GES import ges
 from QIDLearningLib.structure.grouped_metric import GroupedMetric
-from QIDLearningLib.util.data import encode_categorical
+from QIDLearningLib.util.data import encode_categorical, build_causal_graph
 from QIDLearningLib.util.stats import t_test, ks_test
-
 
 
 def covariate_shift(df, quasi_identifiers, treatment_col, treatment_value):
@@ -250,7 +249,7 @@ def propensity_score_overlap(df, quasi_identifiers, treatment_col, treatment_val
     return GroupedMetric(values, group_labels=group_labels, name='Propensity Score Overlap')
 
 
-def causal_importance(df: pd.DataFrame, quasi_identifiers: List[str], causal_graph_algorithm:str='PC') -> float:
+def causal_importance(df: pd.DataFrame, quasi_identifiers: List[str], causal_graph_algorithm:str='PC', causal_graph=[]) -> float:
     """
     Calculate the causal importance of the given quasi-identifiers based on the adjacency matrix of the causal graph.
 
@@ -276,19 +275,8 @@ def causal_importance(df: pd.DataFrame, quasi_identifiers: List[str], causal_gra
 
     """
 
-    df = encode_categorical(df, df.columns)
-    # Learn causal graph using the PC algorithm
-    if causal_graph_algorithm == 'PC':
-        # PC algorithm for causal discovery
-        causal_graph = pc(df.values).G.graph
-        causal_graph[causal_graph == -1] = 1
-    elif causal_graph_algorithm == 'GES':
-        causal_graph = ges(df.values)['G']
-    else:
-        raise ValueError("Only the 'PC' algorithm is implemented here.")
-
-    # Extract adjacency matrix from the learned causal graph
-    np.fill_diagonal(causal_graph, 0)
+    if len(causal_graph) < 1:
+        causal_graph = build_causal_graph(df, causal_graph_algorithm)
 
     # Map the column names of the dataframe to indices in the adjacency matrix
     attribute_names = df.columns.tolist()
@@ -296,6 +284,7 @@ def causal_importance(df: pd.DataFrame, quasi_identifiers: List[str], causal_gra
     # Calculate the causal importance by summing the adjacency matrix values related to quasi-identifiers
     causal_importance_value = 0
     for qid in quasi_identifiers:
+        print(qid)
         if qid in attribute_names:
             qid_idx = attribute_names.index(qid)
             # Sum the row and column corresponding to the quasi-identifier

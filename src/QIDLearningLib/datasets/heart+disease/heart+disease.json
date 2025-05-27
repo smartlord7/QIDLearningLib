@@ -1,0 +1,4 @@
+{
+"sensitive_attributes": ["num", "cp", "thal", "ca", "thalach", "exang", "oldpeak", "slope"]
+"target_attribute" ["num"]
+}
